@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Nick Braun](https://up.htmlacademy.ru/react/10/user/1678643).
-* Наставник: `Неизвестно`.
+* Наставник: [Sergey Vohmyanin](https://github.com/delagen).
 
 ---
 
