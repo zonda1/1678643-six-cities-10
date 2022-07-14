@@ -7,6 +7,5 @@ type AppScreenProps = {
 
 function App({ offersCount }: AppScreenProps): JSX.Element {
   return <MainScreen offersCount={offersCount} />;
-}
 
 export default App;
