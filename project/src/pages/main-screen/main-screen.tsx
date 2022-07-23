@@ -1,10 +1,14 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCards from '../../components/place-cards/place-cards';
+// import { Reviews } from '../../mocks/reviews';
+import { Offers } from '../../mocks/offers';
 
 type OfferCountProps = {
-  offersCount: number;
+  offersCount: number,
+  // reviews: Reviews[],
+  offers: Offers[],
 }
 
-function MainScreen({ offersCount }: OfferCountProps): JSX.Element {
+function MainScreen({ offersCount, offers }: OfferCountProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -94,14 +98,13 @@ function MainScreen({ offersCount }: OfferCountProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
+              <PlaceCards offers={offers} />
+              {/* <PlaceCard />
                 <PlaceCard />
                 <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                <PlaceCard /> */}
 
-                {/* <article className="cities__card place-card">
+              {/* <article className="cities__card place-card">
                   <div className="cities__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
@@ -231,7 +234,7 @@ function MainScreen({ offersCount }: OfferCountProps): JSX.Element {
                     <p className="place-card__type">Private room</p>
                   </div>
                 </article> */}
-              </div>
+
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

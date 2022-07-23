@@ -7,18 +7,21 @@ import PrivateRoute from '../private-route/private-route';
 import { AuthorizationStatus } from '../../const';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-
+import { Offers } from '../../mocks/offers';
+import { Reviews } from '../../mocks/reviews';
 
 type AppScreenProps = {
-  offersCount: number;
+  offersCount: number,
+  offers: Offers[],
+  reviews: Reviews[],
 }
 
-function App({ offersCount }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}>
-          <Route index element={<MainScreen offersCount={offersCount} />} />
+          <Route index element={<MainScreen offersCount={offersCount} offers={offers} />} />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
           <Route path={AppRoute.Favorites} element={<FavoritesScreen />} />
 
