@@ -23,7 +23,7 @@ function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Main}>
           <Route index element={<MainScreen offersCount={offersCount} offers={offers} />} />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
-          <Route path={AppRoute.Favorites} element={<FavoritesScreen />} />
+          <Route path={AppRoute.Favorites} element={<FavoritesScreen offers={offers} />} />
 
           <Route path={AppRoute.Room} element={
             <PrivateRoute

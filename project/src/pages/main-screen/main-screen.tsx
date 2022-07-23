@@ -1,4 +1,5 @@
 import PlaceCards from '../../components/place-cards/place-cards';
+
 // import { Reviews } from '../../mocks/reviews';
 import { Offers } from '../../mocks/offers';
 
