@@ -9,6 +9,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Offers } from '../../mocks/offers';
 import { Reviews } from '../../mocks/reviews';
+import LayoutOffer from '../layout-offer/layout-offer';
 
 type AppScreenProps = {
   offersCount: number,
@@ -20,23 +21,23 @@ function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main}>
-          <Route index element={<MainScreen offersCount={offersCount} offers={offers} />} />
-          <Route path={AppRoute.Login} element={<LoginScreen />} />
-          <Route path={AppRoute.Favorites} element={<FavoritesScreen offers={offers} />} />
-
-          <Route path={AppRoute.Room} element={
+        <Route path={AppRoute.Main} />
+        <Route index element={<MainScreen offersCount={offersCount} offers={offers} />} />
+        <Route path={AppRoute.Login} element={<LoginScreen />} />
+        <Route path={AppRoute.Favorites} element={<FavoritesScreen offers={offers} />} />
+        <Route path={AppRoute.Room} element={<LayoutOffer />}>
+          <Route path=':id' element={
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <OfferScreen />
+              <OfferScreen offers={offers} />
             </PrivateRoute>
           }
           />
-          <Route path='*' element={<NoFoundScreen />} />
         </Route>
+        <Route path='*' element={<NoFoundScreen />} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 

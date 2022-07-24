@@ -5,6 +5,7 @@ export type Features = {
 };
 
 export type Offers = {
+  id: string,
   features: Features,
   rating: number,
   price: number,
@@ -15,6 +16,7 @@ export type Offers = {
 
 export const offers: Offers[] = [
   {
+    id: '1',
     features: {
       type: 'Apartment',
       bedrooms: 3,
@@ -36,6 +38,7 @@ export const offers: Offers[] = [
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.'
   },
   {
+    id: '2',
     features: {
       type: 'Private room',
       bedrooms: 1,
@@ -49,6 +52,7 @@ export const offers: Offers[] = [
     description: 'An excellent one double bedroom maisonette with conservatory and garden boasting well proportioned accommodation ideally located for access to Feltham town centre and Hatton Cross tube station.'
   },
   {
+    id: '3',
     features: {
       type: 'Hotel',
       bedrooms: 1,
@@ -65,6 +69,7 @@ export const offers: Offers[] = [
     description: 'The Panoramic Hotel is a modern, elegant 4-star hotel overlooking the sea, perfect for a romantic, charming vacation, in the enchanting setting of Taormina and the Ionian Sea.'
   },
   {
+    id: '4',
     features: {
       type: 'Apartment',
       bedrooms: 2,

@@ -1,4 +1,6 @@
 import { Offers } from '../../mocks/offers';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type FavoritePlaceCardProp = {
   offer: Offers,
@@ -6,7 +8,7 @@ type FavoritePlaceCardProp = {
 
 
 function FavoritePlaceCard({ offer }: FavoritePlaceCardProp): JSX.Element {
-  const { price, placeName } = offer;
+  const { price, placeName, id } = offer;
   const { type } = offer.features;
 
   return (
@@ -15,9 +17,9 @@ function FavoritePlaceCard({ offer }: FavoritePlaceCardProp): JSX.Element {
         <span>Premium</span>
       </div>
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
