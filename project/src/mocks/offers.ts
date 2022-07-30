@@ -4,9 +4,15 @@ export type Features = {
   maxAdults: number
 };
 
+export type Location = {
+  lat: number,
+  lng: number,
+}
+
 export type Offers = {
   id: string,
   features: Features,
+  location: Location,
   rating: number,
   price: number,
   placeName: string,
@@ -21,6 +27,10 @@ export const offers: Offers[] = [
       type: 'Apartment',
       bedrooms: 3,
       maxAdults: 4,
+    },
+    location: {
+      lat: 52.3909553943508,
+      lng: 4.85309666406198,
     },
     rating: 4.8,
     price: 120,
@@ -44,6 +54,10 @@ export const offers: Offers[] = [
       bedrooms: 1,
       maxAdults: 2,
     },
+    location: {
+      lat: 52.369553943508,
+      lng: 4.85309666406198,
+    },
     rating: 4.5,
     price: 70,
     placeName: 'Canal View Prinsengracht',
@@ -57,6 +71,10 @@ export const offers: Offers[] = [
       type: 'Hotel',
       bedrooms: 1,
       maxAdults: 2,
+    },
+    location: {
+      lat: 52.3909553943508,
+      lng: 4.929309666406198,
     },
     rating: 4.2,
     price: 80,
@@ -74,6 +92,10 @@ export const offers: Offers[] = [
       type: 'Apartment',
       bedrooms: 2,
       maxAdults: 2,
+    },
+    location: {
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
     },
     rating: 4.5,
     price: 100,

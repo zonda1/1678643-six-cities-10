@@ -10,19 +10,21 @@ import { AppRoute } from '../../const';
 import { Offers } from '../../mocks/offers';
 import { Reviews } from '../../mocks/reviews';
 import LayoutOffer from '../layout-offer/layout-offer';
+import { City } from '../../mocks/city';
 
 type AppScreenProps = {
   offersCount: number,
   offers: Offers[],
   reviews: Reviews[],
+  city: City,
 }
 
-function App({ offersCount, offers, reviews }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} />
-        <Route index element={<MainScreen offersCount={offersCount} offers={offers} />} />
+        <Route index element={<MainScreen offersCount={offersCount} offers={offers} city={city} />} />
         <Route path={AppRoute.Login} element={<LoginScreen />} />
         <Route path={AppRoute.Favorites} element={<FavoritesScreen offers={offers} />} />
         <Route path={AppRoute.Room} element={<LayoutOffer />}>

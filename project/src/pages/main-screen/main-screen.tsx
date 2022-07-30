@@ -1,15 +1,18 @@
 import PlaceCards from '../../components/place-cards/place-cards';
+import Map from '../../components/map/map';
 
 // import { Reviews } from '../../mocks/reviews';
 import { Offers } from '../../mocks/offers';
+import { City } from '../../mocks/city';
 
 type OfferCountProps = {
   offersCount: number,
   // reviews: Reviews[],
   offers: Offers[],
+  city: City,
 }
 
-function MainScreen({ offersCount, offers }: OfferCountProps): JSX.Element {
+function MainScreen({ offersCount, offers, city }: OfferCountProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -238,7 +241,9 @@ function MainScreen({ offersCount, offers }: OfferCountProps): JSX.Element {
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} offers={offers}></Map>
+              </section>
             </div>
           </div>
         </div>
