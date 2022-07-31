@@ -16,7 +16,6 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
         },
         zoom: city.zoom,
       });
-      // console.log(instance);
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
         {

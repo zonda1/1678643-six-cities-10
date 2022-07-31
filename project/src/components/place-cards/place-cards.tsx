@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Offers } from '../../mocks/offers';
 import PlaceCard from '../place-card/place-card';
 
-type OffersListProps = {
+export type OffersListProps = {
   offers: Offers[],
 };
 

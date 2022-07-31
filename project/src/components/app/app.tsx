@@ -32,7 +32,7 @@ function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Elemen
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <OfferScreen offers={offers} />
+              <OfferScreen offers={offers} reviews={reviews} city={city} />
             </PrivateRoute>
           }
           />

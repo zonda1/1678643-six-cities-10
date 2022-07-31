@@ -3,12 +3,19 @@ import { Offers } from '../../mocks/offers';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
 import CommentForm from '../../components/comment-form/comment-form';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import { Reviews } from '../../mocks/reviews';
+import Map from '../../components/map/map';
+import { City } from '../../mocks/city';
+import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 
 type OfferScreenProps = {
   offers: Offers[],
+  reviews: Reviews[],
+  city: City
 }
 
-function OfferScreen({ offers }: OfferScreenProps): JSX.Element {
+function OfferScreen({ offers, reviews, city }: OfferScreenProps): JSX.Element {
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const offer = offers.find((el) => el.id === params.id);
@@ -109,8 +116,8 @@ function OfferScreen({ offers }: OfferScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
+                <ReviewsList reviews={reviews} />
+                {/* <ul className="reviews__list">
                   <li className="reviews__item">
                     <div className="reviews__user user">
                       <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -133,17 +140,20 @@ function OfferScreen({ offers }: OfferScreenProps): JSX.Element {
                       <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
                     </div>
                   </li>
-                </ul>
+                </ul> */}
                 <CommentForm></CommentForm>
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map city={city} offers={offers.slice(0, 3)}></Map>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
+            <OffersListNearby offers={offers.slice(0, 3)}></OffersListNearby>
+            {/* <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="#">
@@ -242,7 +252,7 @@ function OfferScreen({ offers }: OfferScreenProps): JSX.Element {
                   <p className="place-card__type">Apartment</p>
                 </div>
               </article>
-            </div>
+            </div> */}
           </section>
         </div>
       </>

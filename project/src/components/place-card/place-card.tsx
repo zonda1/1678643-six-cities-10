@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 
-type OfferProps = {
+export type OfferProps = {
   offer: Offers,
   activeCard: string,
   onCardMousePoint: () => void,
@@ -12,7 +12,6 @@ type OfferProps = {
 function PlaceCard({ offer, activeCard, onCardMousePoint }: OfferProps): JSX.Element {
   const { price, placeName, id } = offer;
   const { type } = offer.features;
-  // const navigate = useNavigate();
   return (
     <article className="cities__card place-card" key={activeCard} onMouseEnter={() => onCardMousePoint()}>
       <div className="place-card__mark">

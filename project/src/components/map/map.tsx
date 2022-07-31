@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import { City } from '../../mocks/city';
 import { Offers } from '../../mocks/offers';
 import 'leaflet/dist/leaflet.css';
