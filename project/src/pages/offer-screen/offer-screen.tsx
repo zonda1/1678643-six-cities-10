@@ -6,16 +6,16 @@ import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { Reviews } from '../../mocks/reviews';
 import Map from '../../components/map/map';
-import { City } from '../../mocks/city';
+import { Cities } from '../../mocks/city';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 
 type OfferScreenProps = {
   offers: Offers[],
   reviews: Reviews[],
-  city: City
+  cities: Cities[]
 }
 
-function OfferScreen({ offers, reviews, city }: OfferScreenProps): JSX.Element {
+function OfferScreen({ offers, reviews, cities }: OfferScreenProps): JSX.Element {
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const offer = offers.find((el) => el.id === params.id);
@@ -146,7 +146,7 @@ function OfferScreen({ offers, reviews, city }: OfferScreenProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={offers.slice(0, 3)}></Map>
+            <Map offers={offers} cities={cities}></Map>
           </section>
         </section>
         <div className="container">

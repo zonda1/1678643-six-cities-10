@@ -7,13 +7,14 @@ export type OfferProps = {
   offer: Offers,
   activeCard: string,
   onCardMousePoint: () => void,
+  className: string
 };
 
-function PlaceCard({ offer, activeCard, onCardMousePoint }: OfferProps): JSX.Element {
+function PlaceCard({ offer, activeCard, onCardMousePoint, className }: OfferProps): JSX.Element {
   const { price, placeName, id } = offer;
   const { type } = offer.features;
   return (
-    <article className="cities__card place-card" key={activeCard} onMouseEnter={() => onCardMousePoint()}>
+    <article className={`${className} place-card`} key={activeCard} onMouseEnter={() => onCardMousePoint()}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>

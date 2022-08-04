@@ -10,7 +10,7 @@ export default function OffersListNearby({ offers }: OffersListProps): JSX.Eleme
       {offers.map((offer, id) => {
         const keyValue = `offer-${id}`;
         return (
-          <OfferNearby key={keyValue} offer={offer} activeCard={activeOffer.activeCard} onCardMousePoint={() => setActiveOffer({ activeCard: keyValue })} />
+          <OfferNearby key={keyValue} offer={offer} activeCard={activeOffer.activeCard} className='near-places__card' onCardMousePoint={() => setActiveOffer({ activeCard: keyValue })} />
         );
       })}
     </div >

@@ -5,6 +5,7 @@ export type Features = {
 };
 
 export type Location = {
+  city: string,
   lat: number,
   lng: number,
 }
@@ -29,6 +30,7 @@ export const offers: Offers[] = [
       maxAdults: 4,
     },
     location: {
+      city: 'Amsterdam',
       lat: 52.3909553943508,
       lng: 4.85309666406198,
     },
@@ -55,6 +57,7 @@ export const offers: Offers[] = [
       maxAdults: 2,
     },
     location: {
+      city: 'Amsterdam',
       lat: 52.369553943508,
       lng: 4.85309666406198,
     },
@@ -73,6 +76,7 @@ export const offers: Offers[] = [
       maxAdults: 2,
     },
     location: {
+      city: 'Amsterdam',
       lat: 52.3909553943508,
       lng: 4.929309666406198,
     },
@@ -94,6 +98,7 @@ export const offers: Offers[] = [
       maxAdults: 2,
     },
     location: {
+      city: 'Amsterdam',
       lat: 52.3809553943508,
       lng: 4.939309666406198,
     },
@@ -107,5 +112,76 @@ export const offers: Offers[] = [
       'Cabel', 'TV',
       'Fridge',],
     description: 'Newly Renovated beautiful 1/2 bed flat situated in between 3 stations, Haringey, Turnpike Lane, Manor House. This top floor modern conversation is a split level flat with good sized bright bedroom and spacious living room.'
+  },
+  //Cologne
+  {
+    id: '5',
+    features: {
+      type: 'Apartment',
+      bedrooms: 2,
+      maxAdults: 2,
+    },
+    location: {
+      city: 'Cologne',
+      lat: 50.930442,
+      lng: 6.950754,
+    },
+    rating: 4.5,
+    price: 100,
+    placeName: 'Workers-Sleep-Station',
+    facilities: ['WiFi',
+      'Washing machine',
+      'Towels',
+      'Kitchen',
+      'Cabel', 'TV',
+      'Fridge',],
+    description: 'Located 3.5 km from LANXESS Arena, Workers-Sleep-Station has accommodations with free WiFi and free private parking.'
+  },
+  {
+    id: '6',
+    features: {
+      type: 'Apartment',
+      bedrooms: 2,
+      maxAdults: 2,
+    },
+    location: {
+      city: 'Cologne',
+      lat: 50.940021,
+      lng: 6.957002,
+    },
+    rating: 4.5,
+    price: 100,
+    placeName: 'Lovely Studio Cologne West - Neues Momomotel',
+    facilities: ['WiFi',
+      'Washing machine',
+      'Towels',
+      'Kitchen',
+      'Cabel', 'TV',
+      'Fridge',],
+    description: 'Located in Cologne in the Nordrhein-Westfalen region, Lovely Studio Cologne West - Neues Momomotel has accommodations with free WiFi and free private parking.'
+  },
+  //Brussels
+  {
+    id: '7',
+    features: {
+      type: 'Apartment',
+      bedrooms: 2,
+      maxAdults: 2,
+    },
+    location: {
+      city: 'Brussels',
+      lat: 50.853521,
+      lng: 4.353822,
+    },
+    rating: 4.5,
+    price: 100,
+    placeName: 'Apartment Capitalcondos ',
+    facilities: ['WiFi',
+      'Washing machine',
+      'Towels',
+      'Kitchen',
+      'Cabel', 'TV',
+      'Fridge',],
+    description: 'Apartment Capitalcondos is located on the outer edge of Ninove, 1.2 mi from the city center. The apartment is connected to part of a villa and located on an avenue which offers cycling and walking paths around the surrounding area.'
   },
 ];

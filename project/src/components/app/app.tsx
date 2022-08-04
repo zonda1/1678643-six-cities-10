@@ -10,21 +10,21 @@ import { AppRoute } from '../../const';
 import { Offers } from '../../mocks/offers';
 import { Reviews } from '../../mocks/reviews';
 import LayoutOffer from '../layout-offer/layout-offer';
-import { City } from '../../mocks/city';
+import { Cities } from '../../mocks/city';
 
 type AppScreenProps = {
   offersCount: number,
   offers: Offers[],
   reviews: Reviews[],
-  city: City,
+  cities: Cities[],
 }
 
-function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers, reviews, cities }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} />
-        <Route index element={<MainScreen offersCount={offersCount} offers={offers} city={city} />} />
+        <Route index element={<MainScreen offersCount={offersCount} offers={offers} cities={cities} />} />
         <Route path={AppRoute.Login} element={<LoginScreen />} />
         <Route path={AppRoute.Favorites} element={<FavoritesScreen offers={offers} />} />
         <Route path={AppRoute.Room} element={<LayoutOffer />}>
@@ -32,7 +32,7 @@ function App({ offersCount, offers, reviews, city }: AppScreenProps): JSX.Elemen
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <OfferScreen offers={offers} reviews={reviews} city={city} />
+              <OfferScreen offers={offers} reviews={reviews} cities={cities} />
             </PrivateRoute>
           }
           />

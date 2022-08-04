@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { City } from '../mocks/city';
+import { Cities } from '../mocks/city';
 
 
-export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map | null {
+export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Cities): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
   useEffect(() => {

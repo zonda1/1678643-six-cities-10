@@ -2,13 +2,14 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { City } from '../../mocks/city';
+import { Cities } from '../../mocks/city';
 import { Offers } from '../../mocks/offers';
+import { useAppSelector } from '../../types/state';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  city: City;
-  offers: Offers[]
+  offers: Offers[],
+  cities: Cities[]
 }
 
 export const URL_MARKER_DEFAULT =
@@ -23,7 +24,9 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({ city, offers }: MapProps): JSX.Element {
+function Map({ offers, cities }: MapProps): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  offers = useAppSelector((state) => state.offers);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
