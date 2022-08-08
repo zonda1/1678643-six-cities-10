@@ -32,18 +32,21 @@ function Map({ offers, cities }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((point) => {
+      const markers = offers.map((point) => {
         const marker = new Marker({
           lat: point.location.lat,
           lng: point.location.lng
         });
 
-        marker
+        return marker
           .setIcon(
             defaultCustomIcon
           )
           .addTo(map);
       });
+      return () => {
+        markers.forEach((marker) => marker.removeFrom(map));
+      };
     }
   }, [map, offers]);
 

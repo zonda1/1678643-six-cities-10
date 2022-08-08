@@ -4,6 +4,7 @@ import { offers } from '../mocks/offers';
 // import { changeCityToCologne, changeCityToBrussels, changeCityToAmsterdam } from './action';
 import { changeCity } from './action';
 import { addOffers } from './action';
+import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated } from './action';
 
 const InitialState = {
   city: CITIES[0],
@@ -21,6 +22,9 @@ export const reducer = createReducer(InitialState, (builder) => {
       state.city = city;
       state.offers = filterByCity(city);
     })
-    .addCase(addOffers, (state) => { state.offers = offers; });
+    .addCase(addOffers, (state) => { state.offers = offers; })
+    .addCase(sortFromMostExpensive, (state) => { state.offers.sort((offerA, offerB) => offerB.price - offerA.price); })
+    .addCase(sortFromCheapest, (state) => { state.offers.sort((offerA, offerB) => offerA.price - offerB.price); })
+    .addCase(sortFromTopRated, (state) => { state.offers.sort((offerA, offerB) => offerB.rating - offerA.rating); });
 });
 

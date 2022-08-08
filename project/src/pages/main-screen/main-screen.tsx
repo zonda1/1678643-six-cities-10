@@ -1,7 +1,7 @@
 import PlaceCards from '../../components/place-cards/place-cards';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
-
+import SortingOptions from '../../components/sorting-options/sorting-options';
 // import { Reviews } from '../../mocks/reviews';
 import { Offers } from '../../mocks/offers';
 import { Cities } from '../../mocks/city';
@@ -67,12 +67,13 @@ function MainScreen({ offersCount, offers, cities }: OfferCountProps): JSX.Eleme
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                <SortingOptions></SortingOptions>
+                {/* <ul className="places__options places__options--custom places__options--opened">
                   <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                   <li className="places__option" tabIndex={0}>Price: low to high</li>
                   <li className="places__option" tabIndex={0}>Price: high to low</li>
                   <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
+                </ul> */}
               </form>
               <PlaceCards offers={offers} />
               {/* <PlaceCard />
