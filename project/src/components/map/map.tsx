@@ -9,7 +9,8 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   offers: Offers[],
-  cities: Cities[]
+  cities: Cities[],
+  selectedPoint: Offers | undefined
 }
 
 export const URL_MARKER_DEFAULT =
@@ -24,7 +25,13 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({ offers, cities }: MapProps): JSX.Element {
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
+});
+
+function Map({ offers, cities, selectedPoint }: MapProps): JSX.Element {
   const city = useAppSelector((state) => state.city);
   offers = useAppSelector((state) => state.offers);
   const mapRef = useRef(null);
@@ -40,7 +47,10 @@ function Map({ offers, cities }: MapProps): JSX.Element {
 
         return marker
           .setIcon(
-            defaultCustomIcon
+            // defaultCustomIcon
+            selectedPoint !== undefined && point.id === selectedPoint.id
+              ? currentCustomIcon
+              : defaultCustomIcon
           )
           .addTo(map);
       });

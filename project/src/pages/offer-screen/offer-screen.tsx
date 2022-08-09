@@ -8,6 +8,7 @@ import { Reviews } from '../../mocks/reviews';
 import Map from '../../components/map/map';
 import { Cities } from '../../mocks/city';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
+import { useState } from 'react';
 
 type OfferScreenProps = {
   offers: Offers[],
@@ -19,7 +20,17 @@ function OfferScreen({ offers, reviews, cities }: OfferScreenProps): JSX.Element
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const offer = offers.find((el) => el.id === params.id);
-  // console.log(offer);
+
+  const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
+    undefined
+  );
+
+  const onCardMousePoint = (listItemName: Offers) => {
+    const currentPoint = offers.find((el) => el === listItemName);
+
+    setSelectedPoint(currentPoint);
+  };
+
   if (offer) {
     const { price, description, rating, placeName, facilities } = offer;
     const { bedrooms, maxAdults, type } = offer.features;
@@ -146,13 +157,13 @@ function OfferScreen({ offers, reviews, cities }: OfferScreenProps): JSX.Element
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={offers} cities={cities}></Map>
+            <Map offers={offers} cities={cities} selectedPoint={selectedPoint}></Map>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersListNearby offers={offers.slice(0, 3)}></OffersListNearby>
+            <OffersListNearby offers={offers.slice(0, 3)} onCardMousePoint={onCardMousePoint}></OffersListNearby>
             {/* <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">

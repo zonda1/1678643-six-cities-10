@@ -5,7 +5,7 @@ import { AppRoute } from '../../const';
 
 export type OfferProps = {
   offer: Offers,
-  activeCard: string,
+  activeCard: Offers | undefined,
   onCardMousePoint: () => void,
   className: string
 };
@@ -13,8 +13,9 @@ export type OfferProps = {
 function PlaceCard({ offer, activeCard, onCardMousePoint, className }: OfferProps): JSX.Element {
   const { price, placeName, id } = offer;
   const { type } = offer.features;
+
   return (
-    <article className={`${className} place-card`} key={activeCard} onMouseEnter={() => onCardMousePoint()}>
+    <article className={`${className} place-card`} {...activeCard} onMouseEnter={() => onCardMousePoint()}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
