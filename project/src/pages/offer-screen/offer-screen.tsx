@@ -25,10 +25,8 @@ function OfferScreen({ offers, reviews, cities }: OfferScreenProps): JSX.Element
     undefined
   );
 
-  const onCardMousePoint = (listItemName: Offers) => {
-    const currentPoint = offers.find((el) => el === listItemName);
-
-    setSelectedPoint(currentPoint);
+  const onCardMousePoint = (listItemName: Offers | undefined) => {
+    setSelectedPoint(listItemName);
   };
 
   if (offer) {

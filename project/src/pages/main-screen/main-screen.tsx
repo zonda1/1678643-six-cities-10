@@ -22,10 +22,8 @@ function MainScreen({ offersCount, offers, cities }: OfferCountProps): JSX.Eleme
     undefined
   );
 
-  const onCardMousePoint = (listItemName: Offers) => {
-    const currentPoint = offers.find((offer) => offer === listItemName);
-
-    setSelectedPoint(currentPoint);
+  const onCardMousePoint = (listItemName: Offers | undefined) => {
+    setSelectedPoint(listItemName);
   };
 
 

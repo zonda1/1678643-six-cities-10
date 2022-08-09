@@ -29,6 +29,19 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
     }
   }, [mapRef, map, city]);
 
+  useEffect(() => {
+    if (map) {
+      map.setView(
+        {
+          lat: city.lat,
+          lng: city.lng
+        },
+        city.zoom,
+        { animate: true }
+      );
+    }
+  }, [map, city]);
+
   return map;
 }
 

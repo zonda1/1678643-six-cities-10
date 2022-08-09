@@ -47,8 +47,7 @@ function Map({ offers, cities, selectedPoint }: MapProps): JSX.Element {
 
         return marker
           .setIcon(
-            // defaultCustomIcon
-            selectedPoint !== undefined && point.id === selectedPoint.id
+            selectedPoint !== undefined && point === selectedPoint
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -58,7 +57,7 @@ function Map({ offers, cities, selectedPoint }: MapProps): JSX.Element {
         markers.forEach((marker) => marker.removeFrom(map));
       };
     }
-  }, [map, offers]);
+  }, [map, offers, selectedPoint]);
 
   return (
     <div
