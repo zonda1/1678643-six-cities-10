@@ -1,14 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Cities, CITIES } from '../mocks/city';
-import { offers } from '../mocks/offers';
-// import { changeCityToCologne, changeCityToBrussels, changeCityToAmsterdam } from './action';
+import { offers, Offers } from '../mocks/offers';
 import { changeCity } from './action';
-import { addOffers } from './action';
+import { setOffers } from './action';
 import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated } from './action';
 
 const InitialState = {
   city: CITIES[0],
-  offers: filterByCity(CITIES[0])
+  offers: [] as Offers[],
+  filteredOffers: [] as Offers[],
 };
 
 function filterByCity(city: Cities) {
@@ -20,11 +20,14 @@ export const reducer = createReducer(InitialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       const { city } = action.payload;
       state.city = city;
-      state.offers = filterByCity(city);
+      state.filteredOffers = filterByCity(city);
     })
-    .addCase(addOffers, (state) => { state.offers = offers; })
-    .addCase(sortFromMostExpensive, (state) => { state.offers.sort((offerA, offerB) => offerB.price - offerA.price); })
-    .addCase(sortFromCheapest, (state) => { state.offers.sort((offerA, offerB) => offerA.price - offerB.price); })
-    .addCase(sortFromTopRated, (state) => { state.offers.sort((offerA, offerB) => offerB.rating - offerA.rating); });
+    .addCase(setOffers, (state) => {
+      state.offers = offers;
+      state.filteredOffers = filterByCity(state.city);
+    })
+    .addCase(sortFromMostExpensive, (state) => { state.filteredOffers.sort((offerA, offerB) => offerB.price - offerA.price); })
+    .addCase(sortFromCheapest, (state) => { state.filteredOffers.sort((offerA, offerB) => offerA.price - offerB.price); })
+    .addCase(sortFromTopRated, (state) => { state.filteredOffers.sort((offerA, offerB) => offerB.rating - offerA.rating); });
 });
 

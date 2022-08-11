@@ -2,22 +2,19 @@ import PlaceCards from '../../components/place-cards/place-cards';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import SortingOptions from '../../components/sorting-options/sorting-options';
-// import { Reviews } from '../../mocks/reviews';
+
 import { Offers } from '../../mocks/offers';
 import { Cities } from '../../mocks/city';
 import { useAppSelector } from '../../types/state';
 import { useState } from 'react';
 
 type OfferCountProps = {
-  offersCount: number,
-  // reviews: Reviews[],
-  offers: Offers[],
   cities: Cities[],
 }
 
-function MainScreen({ offersCount, offers, cities }: OfferCountProps): JSX.Element {
-  offersCount = useAppSelector((state) => state.offers.length);
-  offers = useAppSelector((state) => state.offers);
+function MainScreen({ cities }: OfferCountProps): JSX.Element {
+  const currentCity = useAppSelector((state) => state.city);
+  const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
@@ -69,7 +66,7 @@ function MainScreen({ offersCount, offers, cities }: OfferCountProps): JSX.Eleme
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{`${filteredOffers.length} places to stay in ${currentCity.title}`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0} >
@@ -80,11 +77,11 @@ function MainScreen({ offersCount, offers, cities }: OfferCountProps): JSX.Eleme
                 </span>
                 <SortingOptions></SortingOptions>
               </form>
-              <PlaceCards offers={offers} onCardMousePoint={onCardMousePoint} />
+              <PlaceCards offers={filteredOffers} onCardMousePoint={onCardMousePoint} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} cities={cities} selectedPoint={selectedPoint}></Map>
+                <Map offers={filteredOffers} selectedPoint={selectedPoint}></Map>
               </section>
             </div>
           </div>

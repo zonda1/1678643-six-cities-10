@@ -2,14 +2,12 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { Cities } from '../../mocks/city';
 import { Offers } from '../../mocks/offers';
 import { useAppSelector } from '../../types/state';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   offers: Offers[],
-  cities: Cities[],
   selectedPoint: Offers | undefined
 }
 
@@ -31,9 +29,8 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({ offers, cities, selectedPoint }: MapProps): JSX.Element {
+function Map({ offers, selectedPoint }: MapProps): JSX.Element {
   const city = useAppSelector((state) => state.city);
-  offers = useAppSelector((state) => state.offers);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
