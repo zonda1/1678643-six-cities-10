@@ -4,16 +4,17 @@ import CitiesList from '../../components/cities-list/cities-list';
 import SortingOptions from '../../components/sorting-options/sorting-options';
 
 import { Offers } from '../../mocks/offers';
-import { Cities } from '../../mocks/city';
+// import { Cities } from '../../mocks/city';
 import { useAppSelector } from '../../types/state';
 import { useState } from 'react';
 
-type OfferCountProps = {
-  cities: Cities[],
-}
+// type OfferCountProps = {
+//   cities: Cities[],
+// }
 
-function MainScreen({ cities }: OfferCountProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
+  const cities = useAppSelector((state) => state.allCities);
   const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
@@ -66,7 +67,7 @@ function MainScreen({ cities }: OfferCountProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${filteredOffers.length} places to stay in ${currentCity.title}`}</b>
+              <b className="places__found">{`${filteredOffers.length} places to stay in ${currentCity.name}`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0} >

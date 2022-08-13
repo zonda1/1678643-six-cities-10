@@ -10,8 +10,7 @@ export type OfferProps = {
 };
 
 function PlaceCard({ offer, onCardMousePoint, className }: OfferProps): JSX.Element {
-  const { price, placeName, id } = offer;
-  const { type } = offer.features;
+  const { price, title, id, type } = offer;
 
   return (
     <article className={`${className} place-card`} onMouseEnter={() => onCardMousePoint?.(offer)} onMouseLeave={() => onCardMousePoint?.(undefined)}>
@@ -43,7 +42,7 @@ function PlaceCard({ offer, onCardMousePoint, className }: OfferProps): JSX.Elem
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeName}</a>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -38,13 +38,13 @@ function Map({ offers, selectedPoint }: MapProps): JSX.Element {
     if (map) {
       const markers = offers.map((point) => {
         const marker = new Marker({
-          lat: point.location.lat,
-          lng: point.location.lng
+          lat: point.location.latitude,
+          lng: point.location.longitude
         });
 
         return marker
           .setIcon(
-            selectedPoint !== undefined && point === selectedPoint
+            selectedPoint !== undefined && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )

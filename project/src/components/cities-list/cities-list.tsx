@@ -1,9 +1,10 @@
-import { Cities } from '../../mocks/city';
+// import { City } from '../../mocks/city';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { changeCity } from '../../store/action';
+import { CityType } from '../../mocks/offers';
 
 type CitiesListProps = {
-  cities: Cities[]
+  cities: CityType[]
 }
 
 
@@ -14,13 +15,12 @@ export default function CitiesList({ cities }: CitiesListProps) {
     <ul className="locations__list tabs__list">
       {cities.map((city, index) => {
         const keyValue = `city-${index}`;
-        const value = city.title;
         return (
           <li key={keyValue} className="locations__item">
             <a className={`${city === currentCity ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}`} href="#" onClick={() =>
-              dispatch(changeCity({ city }))}
+              dispatch(changeCity(city))}
             >
-              <span>{value}</span>
+              <span>{city.name}</span>
             </a>
           </li>
         );

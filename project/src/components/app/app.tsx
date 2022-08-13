@@ -9,19 +9,30 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Reviews } from '../../mocks/reviews';
 import LayoutOffer from '../layout-offer/layout-offer';
-import { Cities } from '../../mocks/city';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppSelector } from '../../types/state';
+// import { isCheckedAuth } from '../../store/reducer';
 
 type AppScreenProps = {
   reviews: Reviews[],
-  cities: Cities[],
 }
 
-function App({ reviews, cities }: AppScreenProps): JSX.Element {
+function App({ reviews }: AppScreenProps): JSX.Element {
+
+  const { isDataLoaded } = useAppSelector((state) => state);
+
+  if (isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} />
-        <Route index element={<MainScreen cities={cities} />} />
+        <Route index element={<MainScreen />} />
         <Route path={AppRoute.Login} element={<LoginScreen />} />
         <Route path={AppRoute.Favorites} element={<FavoritesScreen />} />
         <Route path={AppRoute.Room} element={<LayoutOffer />}>
@@ -29,7 +40,7 @@ function App({ reviews, cities }: AppScreenProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <OfferScreen reviews={reviews} cities={cities} />
+              <OfferScreen reviews={reviews} />
             </PrivateRoute>
           }
           />

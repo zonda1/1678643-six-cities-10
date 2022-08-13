@@ -6,17 +6,15 @@ import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { Reviews } from '../../mocks/reviews';
 import Map from '../../components/map/map';
-import { Cities } from '../../mocks/city';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 import { useState } from 'react';
 import { useAppSelector } from '../../types/state';
 
 type OfferScreenProps = {
   reviews: Reviews[],
-  cities: Cities[]
 }
 
-function OfferScreen({ reviews, cities }: OfferScreenProps): JSX.Element {
+function OfferScreen({ reviews }: OfferScreenProps): JSX.Element {
   const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,8 +29,7 @@ function OfferScreen({ reviews, cities }: OfferScreenProps): JSX.Element {
   };
 
   if (offer) {
-    const { price, description, rating, placeName, facilities } = offer;
-    const { bedrooms, maxAdults, type } = offer.features;
+    const { price, description, rating, title, bedrooms, maxAdults, type, goods } = offer;
     return (
       <>
         <section className="property">
@@ -65,7 +62,7 @@ function OfferScreen({ reviews, cities }: OfferScreenProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {placeName}
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -99,7 +96,7 @@ function OfferScreen({ reviews, cities }: OfferScreenProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {facilities.map((el, id) => (
+                  {goods.map((el, id) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <li key={id} className="property__inside-item">
                       {el}

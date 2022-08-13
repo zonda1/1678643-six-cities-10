@@ -1,20 +1,19 @@
 /* eslint-disable no-console */
 import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { Cities } from '../mocks/city';
+import { CityType } from '../mocks/offers';
 
-
-export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Cities): Map | null {
+export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: CityType): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-        zoom: city.zoom,
+        zoom: city.location.zoom,
       });
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -33,10 +32,10 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
     if (map) {
       map.setView(
         {
-          lat: city.lat,
-          lng: city.lng
+          lat: city.location.latitude,
+          lng: city.location.longitude
         },
-        city.zoom,
+        city.location.zoom,
         { animate: true }
       );
     }

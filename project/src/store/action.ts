@@ -1,9 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Cities } from '../mocks/city';
-import { Offers } from '../mocks/offers';
+import { Offers, CityType } from '../mocks/offers';
 
-export const changeCity = createAction<{ city: Cities }>('changeCity');
+export const changeCity = createAction<CityType>('changeCity');
 export const setOffers = createAction<Offers[]>('setOffers');
+export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 export const sortFromMostExpensive = createAction('sortFromMostExpensive');
 export const sortFromCheapest = createAction('sortFromCheapest');
 export const sortFromTopRated = createAction('sortFromTopRated');
+
