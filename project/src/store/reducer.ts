@@ -3,10 +3,10 @@ import { createReducer } from '@reduxjs/toolkit';
 // import { c} from '../mocks/city';
 // import { Offers } from '../mocks/offers';
 import { Offers, CityType } from '../mocks/offers';
-import { changeCity } from './action';
-import { setOffers } from './action';
-import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, setDataLoadedStatus } from './action';
+import { changeCity, setOffers, setError, setProfileType } from './action';
+import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, setDataLoadedStatus, setAuthorizationStatus } from './action';
 import { AuthorizationStatus } from '../const';
+import { UserData } from '../types/user-data';
 
 const InitialState = {
   city: {
@@ -47,11 +47,13 @@ const InitialState = {
       name: 'Brussels'
     }
   ] as CityType[],
-  allcities2: [] as CityType[],
+  // allcities2: [] as CityType[],
   offers: [] as Offers[],
   filteredOffers: [] as Offers[],
   authorizationStatus: AuthorizationStatus.Unknown as AuthorizationStatus,
   isDataLoaded: false as boolean,
+  error: null as string | null,
+  profileType: null as UserData | null,
 };
 
 function filterByCity(dataOffers: Offers[], city: CityType) {
@@ -64,6 +66,12 @@ export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean
 
 export const reducer = createReducer(InitialState, (builder) => {
   builder
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setProfileType, (state, action) => {
+      state.profileType = action.payload;
+    })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
       state.filteredOffers = filterByCity(state.offers, state.city);
@@ -76,14 +84,17 @@ export const reducer = createReducer(InitialState, (builder) => {
       // state.city = city;
       // console.log(city);
 
-      state.allcities2 = [...new Set(state.offers.map((el) => el.city))];
+      //   state.allcities2 = [...new Set(state.offers.map((el) => el.city))];
+      // console.log(state.allcities2);
 
       state.filteredOffers = filterByCity(state.offers, state.city);
-      console.log(state.allcities2);
       console.log(state.filteredOffers);
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
     .addCase(sortFromMostExpensive, (state) => { state.filteredOffers.sort((offerA, offerB) => offerB.price - offerA.price); })
     .addCase(sortFromCheapest, (state) => { state.filteredOffers.sort((offerA, offerB) => offerA.price - offerB.price); })

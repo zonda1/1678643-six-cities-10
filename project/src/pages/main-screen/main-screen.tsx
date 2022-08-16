@@ -5,17 +5,22 @@ import SortingOptions from '../../components/sorting-options/sorting-options';
 
 import { Offers } from '../../mocks/offers';
 // import { Cities } from '../../mocks/city';
-import { useAppSelector } from '../../types/state';
+import { useAppSelector, useAppDispatch } from '../../types/state';
 import { useState } from 'react';
+import { AuthorizationStatus } from '../../const';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/api-actions';
 
-// type OfferCountProps = {
-//   cities: Cities[],
-// }
+type MainScreenProps = {
+  authorizationStatus: AuthorizationStatus,
+}
 
-function MainScreen(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
-  const cities = useAppSelector((state) => state.allCities);
-  const filteredOffers = useAppSelector((state) => state.filteredOffers);
+function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
+  // const currentCity = useAppSelector((state) => state.city);
+  // const cities = useAppSelector((state) => state.allCities);
+  // const filteredOffers = useAppSelector((state) => state.filteredOffers);
+  const { city, allCities, filteredOffers, profileType } = useAppSelector((state) => state);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
@@ -23,6 +28,7 @@ function MainScreen(): JSX.Element {
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
   };
+  const dispatch = useAppDispatch();
 
 
   return (
@@ -37,37 +43,51 @@ function MainScreen(): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
+                {profileType && authorizationStatus === AuthorizationStatus.Auth ?
+                  <>
+                    <li className="header__nav-item user">
+                      <a className="header__nav-link header__nav-link--profile" href="#">
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">{profileType.email}</span>
+                        <span className="header__favorite-count">3</span>
+                      </a>
+                    </li>
+                    <li className="header__nav-item">
+                      <a className="header__nav-link" href="#" onClick={() => {
+                        dispatch(logoutAction());
+                      }}
+                      >
+                        <span className="header__signout">Sign out</span>
+                      </a>
+                    </li>
+                  </>
+                  :
+                  <Link to={AppRoute.Login}>
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </a>
+                  </Link>}
               </ul>
             </nav>
           </div>
         </div>
-      </header>
+      </header >
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList cities={cities}></CitiesList>
+            <CitiesList cities={allCities}></CitiesList>
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${filteredOffers.length} places to stay in ${currentCity.name}`}</b>
+              <b className="places__found">{`${filteredOffers.length} places to stay in ${city.name}`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0} >
