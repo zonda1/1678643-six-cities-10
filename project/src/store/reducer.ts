@@ -3,7 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 // import { c} from '../mocks/city';
 // import { Offers } from '../mocks/offers';
 import { Offers, CityType } from '../mocks/offers';
-import { changeCity, setOffers, setError, setProfileType } from './action';
+import { changeCity, setOffers, setError, setProfileType, setCurrentOffer } from './action';
 import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, setDataLoadedStatus, setAuthorizationStatus } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
@@ -50,6 +50,7 @@ const InitialState = {
   // allcities2: [] as CityType[],
   offers: [] as Offers[],
   filteredOffers: [] as Offers[],
+  currentOffer: {} as Offers,
   authorizationStatus: AuthorizationStatus.Unknown as AuthorizationStatus,
   isDataLoaded: false as boolean,
   error: null as string | null,
@@ -89,6 +90,9 @@ export const reducer = createReducer(InitialState, (builder) => {
 
       state.filteredOffers = filterByCity(state.offers, state.city);
       console.log(state.filteredOffers);
+    })
+    .addCase(setCurrentOffer, (state, action) => {
+      state.currentOffer = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;

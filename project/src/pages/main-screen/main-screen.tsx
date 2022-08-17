@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import PlaceCards from '../../components/place-cards/place-cards';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
@@ -11,25 +12,27 @@ import { AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
+import { fetchCurrentOfferAction } from '../../store/api-actions';
 
 type MainScreenProps = {
   authorizationStatus: AuthorizationStatus,
 }
 
 function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
-  // const currentCity = useAppSelector((state) => state.city);
-  // const cities = useAppSelector((state) => state.allCities);
-  // const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const { city, allCities, filteredOffers, profileType } = useAppSelector((state) => state);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
+  const dispatch = useAppDispatch();
 
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
   };
-  const dispatch = useAppDispatch();
 
+  const onCardMouseClick = (cardItem: Offers) => {
+    console.log(cardItem);
+    dispatch(fetchCurrentOfferAction(cardItem));
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -98,7 +101,7 @@ function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
                 </span>
                 <SortingOptions></SortingOptions>
               </form>
-              <PlaceCards offers={filteredOffers} onCardMousePoint={onCardMousePoint} />
+              <PlaceCards offers={filteredOffers} onCardMousePoint={onCardMousePoint} onCardMouseClick={onCardMouseClick} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

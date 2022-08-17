@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Offers } from '../mocks/offers';
 import { State, AppDispatch } from '../types/state';
 import { APIRoute, AppRoute } from '../const';
-import { redirectToRoute, setAuthorizationStatus, setDataLoadedStatus, setOffers, setProfileType } from './action';
+import { redirectToRoute, setAuthorizationStatus, setCurrentOffer, setDataLoadedStatus, setOffers, setProfileType } from './action';
 import { AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -82,3 +83,16 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(setProfileType(null));
   },
 );
+
+
+export const fetchCurrentOfferAction = createAsyncThunk<void, Offers, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchCurrentOffer',
+  async ({ id }, { dispatch, extra: api }) => {
+    const { data } = await api.get<Offers>(`${APIRoute.HOTELS}/${id}`);
+    console.log(data);
+    dispatch(setCurrentOffer(data));
+  });

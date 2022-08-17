@@ -1,6 +1,7 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-console */
 import { Offers } from '../../mocks/offers';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
@@ -15,21 +16,25 @@ type OfferScreenProps = {
 }
 
 function OfferScreen({ reviews }: OfferScreenProps): JSX.Element {
-  const filteredOffers = useAppSelector((state) => state.filteredOffers);
-  const params = useParams();
+  // const filteredOffers = useAppSelector((state) => state.filteredOffers);
+  // const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const offer = filteredOffers.find((el) => el.id === params.id);
+  // const offer = filteredOffers.find((el) => el.id === params.id);
+
+  const { currentOffer, filteredOffers } = useAppSelector((state) => state);
 
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
 
+  console.log(currentOffer);
+  console.log(filteredOffers);
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
   };
 
-  if (offer) {
-    const { price, description, rating, title, bedrooms, maxAdults, type, goods } = offer;
+  if (currentOffer) {
+    const { price, description, rating, title, bedrooms, maxAdults, type, goods } = currentOffer;
     return (
       <>
         <section className="property">

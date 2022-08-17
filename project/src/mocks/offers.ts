@@ -32,7 +32,7 @@ export type Offers = {
   host: HostType,
   description: string,
   location: Location,
-  id: string,
+  id: number,
 };
 
 // export type Features = {
