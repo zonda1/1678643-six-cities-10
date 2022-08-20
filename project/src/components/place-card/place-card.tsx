@@ -6,23 +6,21 @@ import { AppRoute } from '../../const';
 export type OfferProps = {
   offer: Offers,
   onCardMousePoint?: (offer: Offers | undefined) => void,
-  onCardMouseClick?: (offer: Offers) => void,
   className: string
 };
 
-function PlaceCard({ offer, onCardMousePoint, onCardMouseClick, className }: OfferProps): JSX.Element {
-  const { price, title, type, id } = offer;
+function PlaceCard({ offer, onCardMousePoint, className }: OfferProps): JSX.Element {
+  const { price, title, type, id, previewImage, isPremium, rating } = offer;
 
   return (
-    <article className={`${className} place-card`} onMouseEnter={() => onCardMousePoint?.(offer)} onMouseLeave={() => onCardMousePoint?.(undefined)} onClick={() => onCardMouseClick?.(offer)}>
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+    <article className={`${className} place-card`} onMouseEnter={() => onCardMousePoint?.(offer)} onMouseLeave={() => onCardMousePoint?.(undefined)}>
+      {isPremium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Room}/${id}`}>
-          {/* <a href='#'> */}
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
-          {/* </a> */}
+        <Link to={`/${AppRoute.Room}/${id}`}>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -40,7 +38,7 @@ function PlaceCard({ offer, onCardMousePoint, onCardMouseClick, className }: Off
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${rating * 100 / 5}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -3,11 +3,10 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NoFoundScreen from '../../pages/no-found-screen/not-found-screen';
-import PrivateRoute from '../private-route/private-route';
+// import PrivateRoute from '../private-route/private-route';
 // import { AuthorizationStatus } from '../../const';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Reviews } from '../../mocks/reviews';
 import LayoutOffer from '../layout-offer/layout-offer';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../types/state';
@@ -15,11 +14,7 @@ import { isCheckedAuth } from '../../store/reducer';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type AppScreenProps = {
-  reviews: Reviews[],
-}
-
-function App({ reviews }: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
 
   const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
 
@@ -39,11 +34,7 @@ function App({ reviews }: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Favorites} element={<FavoritesScreen />} />
         <Route path={AppRoute.Room} element={<LayoutOffer />}>
           <Route path=':id' element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <OfferScreen reviews={reviews} />
-            </PrivateRoute>
+            <OfferScreen />
           }
           />
         </Route>

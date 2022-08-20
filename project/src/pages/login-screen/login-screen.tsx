@@ -19,7 +19,7 @@ function LoginScreen() {
 
     if (emailRef.current !== null && passwordRef.current !== null) {
       onSubmit({
-        login: emailRef.current.value,
+        email: emailRef.current.value,
         password: passwordRef.current.value,
       });
     }

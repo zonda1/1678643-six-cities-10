@@ -1,4 +1,14 @@
 export type AuthData = {
-  login: string;
+  email: string;
   password: string;
+};
+
+export type CommentType = {
+  comment: string
+  rating: number
+}
+
+export type NewCommentData = {
+  id: number,
+  review: CommentType,
 };

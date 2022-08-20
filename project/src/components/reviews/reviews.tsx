@@ -1,11 +1,11 @@
-import { Reviews } from '../../mocks/reviews';
+import { Comments } from '../../mocks/reviews';
 
 type OfferReviewsProps = {
-  review: Reviews,
+  review: Comments,
 }
 
 export default function OfferReviews({ review }: OfferReviewsProps): JSX.Element {
-  const { author, grade, feedback } = review;
+  const { user: { name }, rating, comment } = review;
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -15,18 +15,18 @@ export default function OfferReviews({ review }: OfferReviewsProps): JSX.Element
           />
         </div>
         <span className="reviews__user-name">
-          {author}
+          {name}
         </span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: `${grade}` }}></span>
+            <span style={{ width: `${rating}` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
-          {feedback}
+          {comment}
         </p>
         <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
       </div>

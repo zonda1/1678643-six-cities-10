@@ -3,10 +3,13 @@ import { AuthorizationStatus } from '../const';
 import { Offers, CityType } from '../mocks/offers';
 import { AppRoute } from '../const';
 import { UserData } from '../types/user-data';
+import { Comments } from '../mocks/reviews';
 
 export const changeCity = createAction<CityType>('changeCity');
 export const setOffers = createAction<Offers[]>('setOffers');
-export const setCurrentOffer = createAction<Offers>('setCurrentOffer');
+export const setCurrentOffer = createAction<Offers | null>('setCurrentOffer');
+export const setOffersNearby = createAction<Offers[]>('setOffersNearby');
+export const setOfferComments = createAction<Comments[]>('setOfferComments');
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('setAuthorizationStatus');
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

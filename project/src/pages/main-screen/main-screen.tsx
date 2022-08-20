@@ -12,7 +12,6 @@ import { AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
-import { fetchCurrentOfferAction } from '../../store/api-actions';
 
 type MainScreenProps = {
   authorizationStatus: AuthorizationStatus,
@@ -29,10 +28,10 @@ function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
     setSelectedPoint(listItemName);
   };
 
-  const onCardMouseClick = (cardItem: Offers) => {
-    console.log(cardItem);
-    dispatch(fetchCurrentOfferAction(cardItem));
-  };
+  // const onCardMouseClick = (cardItem: Offers) => {
+  //   console.log(cardItem);
+  //   dispatch(fetchCurrentOfferAction(cardItem));
+  // };
 
   return (
     <div className="page page--gray page--main">
@@ -101,7 +100,7 @@ function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
                 </span>
                 <SortingOptions></SortingOptions>
               </form>
-              <PlaceCards offers={filteredOffers} onCardMousePoint={onCardMousePoint} onCardMouseClick={onCardMouseClick} />
+              <PlaceCards offers={filteredOffers} onCardMousePoint={onCardMousePoint} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

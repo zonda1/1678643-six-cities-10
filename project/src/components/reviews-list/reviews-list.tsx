@@ -1,19 +1,19 @@
-import { Reviews } from '../../mocks/reviews';
+import { Comments } from '../../mocks/reviews';
 import OfferReviews from '../reviews/reviews';
 
 type ReviewsListProps = {
-  reviews: Reviews[],
+  comments: Comments[],
 }
 
-export default function ReviewsList({ reviews }: ReviewsListProps) {
+export default function ReviewsList({ comments }: ReviewsListProps) {
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review, id) => {
+        {comments.map((comment, id) => {
           const keyValue = `offer-${id}`;
           return (
-            <OfferReviews key={keyValue} review={review} />
+            <OfferReviews key={keyValue} review={comment} />
           );
         })}
       </ul>

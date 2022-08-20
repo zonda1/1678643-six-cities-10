@@ -3,10 +3,11 @@ import { createReducer } from '@reduxjs/toolkit';
 // import { c} from '../mocks/city';
 // import { Offers } from '../mocks/offers';
 import { Offers, CityType } from '../mocks/offers';
-import { changeCity, setOffers, setError, setProfileType, setCurrentOffer } from './action';
-import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, setDataLoadedStatus, setAuthorizationStatus } from './action';
+import { changeCity, setOffers, setError, setProfileType, setCurrentOffer, setOffersNearby } from './action';
+import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, setDataLoadedStatus, setAuthorizationStatus, setOfferComments } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
+import { Comments } from '../mocks/reviews';
 
 const InitialState = {
   city: {
@@ -47,10 +48,12 @@ const InitialState = {
       name: 'Brussels'
     }
   ] as CityType[],
-  // allcities2: [] as CityType[],
+  // allcities2: [] as any,
   offers: [] as Offers[],
   filteredOffers: [] as Offers[],
-  currentOffer: {} as Offers,
+  currentOffer: null as Offers | null,
+  offersNearby: [] as Offers[],
+  currentOfferComments: [] as Comments[],
   authorizationStatus: AuthorizationStatus.Unknown as AuthorizationStatus,
   isDataLoaded: false as boolean,
   error: null as string | null,
@@ -85,7 +88,7 @@ export const reducer = createReducer(InitialState, (builder) => {
       // state.city = city;
       // console.log(city);
 
-      //   state.allcities2 = [...new Set(state.offers.map((el) => el.city))];
+      // state.allcities2 = [...new Set(state.offers.map((el) => el.isFavorite))];
       // console.log(state.allcities2);
 
       state.filteredOffers = filterByCity(state.offers, state.city);
@@ -93,6 +96,12 @@ export const reducer = createReducer(InitialState, (builder) => {
     })
     .addCase(setCurrentOffer, (state, action) => {
       state.currentOffer = action.payload;
+    })
+    .addCase(setOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
+    })
+    .addCase(setOfferComments, (state, action) => {
+      state.currentOfferComments = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
