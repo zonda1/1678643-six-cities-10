@@ -5,10 +5,10 @@ export type AuthData = {
 
 export type CommentType = {
   comment: string
-  rating: number
+  rating: number | null
 }
 
 export type NewCommentData = {
-  id: number,
+  id: any,
   review: CommentType,
 };

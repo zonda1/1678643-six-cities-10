@@ -11,9 +11,11 @@ import Map from '../../components/map/map';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../types/state';
-import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction } from '../../store/api-actions';
+import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
 import { setCurrentOffer } from '../../store/action';
 import LoadingScreen from '../loading-screen/loading-screen';
+// import { NewCommentData } from '../../types/auth-data';
+// import { CommentType } from '../../types/auth-data';
 
 // type OfferScreenProps = {
 //   reviews: Reviews[],
@@ -61,6 +63,12 @@ function OfferScreen(): JSX.Element {
 
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
+  };
+
+  const onUserCommentHandler = (comment: string, rating: number | null) => {
+    if (id) {
+      dispatch(postNewComment({ id, review: { comment, rating } }));
+    }
   };
 
   if (currentOffer && offersNearby && currentOfferComments) {
@@ -152,7 +160,7 @@ function OfferScreen(): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList comments={currentOfferComments} />
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm /> : ''}
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm onUserCommentHandler={onUserCommentHandler} /> : ''}
               </section>
             </div>
           </div>

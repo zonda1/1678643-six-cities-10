@@ -7,7 +7,7 @@ import { State, AppDispatch } from '../types/state';
 import { APIRoute, AppRoute } from '../const';
 import { redirectToRoute, setAuthorizationStatus, setCurrentOffer, setDataLoadedStatus, setOffers, setOffersNearby, setOfferComments, setProfileType } from './action';
 import { AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { AuthData, NewCommentData, CommentType } from '../types/auth-data';
+import { AuthData, NewCommentData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { store } from '.';
@@ -129,12 +129,8 @@ export const postNewComment = createAsyncThunk<void, NewCommentData, {
 }>(
   'postNewComment',
   async ({ id, review: { comment, rating } }, { dispatch, extra: api }) => {
-    const { data } = await api.post<CommentType>(`${APIRoute.COMMENTS}/${id}`, { comment, rating });
+    const { data } = await api.post<Comments[]>(`${APIRoute.COMMENTS}/${id}`, { comment, rating });
     console.log(data);
-    // const { token } = data;
-    // saveToken(token);
-    // dispatch(setProfileType(data));
-    // dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    // dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(setOfferComments(data));
   },
 );
