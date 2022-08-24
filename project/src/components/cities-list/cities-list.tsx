@@ -1,19 +1,13 @@
-// import { City } from '../../mocks/city';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { changeCity } from '../../store/action';
-import { CityType } from '../../mocks/offers';
+import { memo } from 'react';
 
-type CitiesListProps = {
-  cities: CityType[]
-}
-
-
-export default function CitiesList({ cities }: CitiesListProps) {
-  const currentCity = useAppSelector((state) => state.city);
+function CitiesList() {
+  const { city: currentCity, allCities } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city, index) => {
+      {allCities.map((city, index) => {
         const keyValue = `city-${index}`;
         return (
           <li key={keyValue} className="locations__item">
@@ -28,3 +22,5 @@ export default function CitiesList({ cities }: CitiesListProps) {
     </ul >
   );
 }
+
+export default memo(CitiesList);
