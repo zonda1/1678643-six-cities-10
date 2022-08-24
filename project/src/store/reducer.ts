@@ -17,38 +17,7 @@ const InitialState = {
     },
     name: 'Paris'
   } as CityType,
-  allCities: [
-    {
-      location: {
-        latitude: 51.225402, longitude: 6.776314, zoom: 13
-      },
-      name: 'Dusseldorf',
-    },
-    {
-      location:
-      {
-        latitude: 48.85661, longitude: 2.351499, zoom: 13
-      },
-      name: 'Paris'
-    },
-    {
-      location: { latitude: 53.550341, longitude: 10.000654, zoom: 13 },
-      name: 'Hamburg'
-    },
-    {
-      location: { latitude: 50.938361, longitude: 6.959974, zoom: 13 },
-      name: 'Cologne'
-    },
-    {
-      location: { latitude: 52.37454, longitude: 4.897976, zoom: 13 },
-      name: 'Amsterdam'
-    },
-    {
-      location: { latitude: 50.846557, longitude: 4.351697, zoom: 13 },
-      name: 'Brussels'
-    }
-  ] as CityType[],
-  // allcities2: [] as any,
+  allCities: [] as CityType[],
   offers: [] as Offers[],
   filteredOffers: [] as Offers[],
   currentOffer: null as Offers | null,
@@ -84,12 +53,11 @@ export const reducer = createReducer(InitialState, (builder) => {
       state.offers = action.payload;
       console.log(state.offers);
 
-      // const { city } = state.offers.find((el) => el.city.name === 'Paris');
-      // state.city = city;
-      // console.log(city);
-
-      // state.allcities2 = [...new Set(state.offers.map((el) => el.isFavorite))];
-      // console.log(state.allcities2);
+      const cities = [...state.offers.reduce((map, offer) => {
+        map.set(offer.city.name, offer.city);
+        return map;
+      }, new Map<string, CityType>()).values()];
+      state.allCities = cities;
 
       state.filteredOffers = filterByCity(state.offers, state.city);
       console.log(state.filteredOffers);

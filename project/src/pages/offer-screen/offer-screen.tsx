@@ -6,7 +6,6 @@ import NotFoundScreen from '../no-found-screen/not-found-screen';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { AuthorizationStatus } from '../../const';
-// import { Comments } from '../../mocks/reviews';
 import Map from '../../components/map/map';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 import { useEffect, useState } from 'react';
@@ -14,8 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../types/state';
 import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
 import { setCurrentOffer } from '../../store/action';
 import LoadingScreen from '../loading-screen/loading-screen';
-// import { NewCommentData } from '../../types/auth-data';
-// import { CommentType } from '../../types/auth-data';
 
 // type OfferScreenProps = {
 //   reviews: Reviews[],
