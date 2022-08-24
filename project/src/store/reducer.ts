@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer, createSelector } from '@reduxjs/toolkit';
 // import { c} from '../mocks/city';
 // import { Offers } from '../mocks/offers';
 import { Offers, CityType } from '../mocks/offers';
@@ -47,7 +47,10 @@ export const reducer = createReducer(InitialState, (builder) => {
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
-      state.filteredOffers = filterByCity(state.offers, state.city);
+      // state.filteredOffers = filterByCity(state.offers, state.city);
+      const getOffers = () => state.offers;
+      const getCity = () => state.city;
+      state.filteredOffers = createSelector([getOffers, getCity], (offers, city) => filterByCity(offers, city))(state);
     })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
@@ -59,7 +62,10 @@ export const reducer = createReducer(InitialState, (builder) => {
       }, new Map<string, CityType>()).values()];
       state.allCities = cities;
 
-      state.filteredOffers = filterByCity(state.offers, state.city);
+      // state.filteredOffers = filterByCity(state.offers, state.city);
+      const getOffers = () => state.offers;
+      const getCity = () => state.city;
+      state.filteredOffers = createSelector([getOffers, getCity], (offers, city) => filterByCity(offers, city))(state);
       console.log(state.filteredOffers);
     })
     .addCase(setCurrentOffer, (state, action) => {
