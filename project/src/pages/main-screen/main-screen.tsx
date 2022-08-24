@@ -18,7 +18,7 @@ type MainScreenProps = {
 }
 
 function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
-  const { city, allCities, filteredOffers, profileType } = useAppSelector((state) => state);
+  const { city, filteredOffers, profileType } = useAppSelector((state) => state);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
@@ -82,7 +82,7 @@ function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList cities={allCities}></CitiesList>
+            <CitiesList></CitiesList>
           </section>
         </div>
         <div className="cities">
