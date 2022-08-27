@@ -3,8 +3,7 @@ import { FetchData } from '../../types/state';
 import { NameSpace } from '../../const';
 import { fetchOffersAction, fetchCurrentOfferAction, fetchOffersNearbyAction, fetchOfferCommentsAction, postNewComment } from '../api-actions';
 import { CityType } from '../../types/offers';
-import { filterByCity } from '../reducer';
-// import { getOffers, getCity } from './selectors';
+import { filterByCity } from '../../utils';
 
 
 const initialState: FetchData = {
@@ -29,9 +28,10 @@ export const fetchData = createSlice({
   initialState,
   reducers: {
     changeCity: (state, action) => {
-      state.city = action.payload;
+      if (state.city !== action.payload) {
+        state.city = action.payload;
+      }
       state.filteredOffers = filterByCity(state.offers, state.city);
-      // state.filteredOffers = createSelector([getOffers, getCity], (offers, city) => filterByCity(offers, city))(state);
     },
     setCurrentOffer: (state, action) => {
       state.currentOffer = action.payload;
@@ -53,7 +53,6 @@ export const fetchData = createSlice({
         }, new Map<string, CityType>()).values()];
         state.allCities = cities;
         state.filteredOffers = filterByCity(state.offers, state.city);
-        // state.filteredOffers = createSelector([getOffers, getCity], (offers, city) => filterByCity(offers, city))(state);
         state.isDataLoaded = false;
       })
       .addCase(fetchCurrentOfferAction.fulfilled, (state, action) => {

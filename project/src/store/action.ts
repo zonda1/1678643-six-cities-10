@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AppRoute } from '../const';
 
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
+export const setError = createAction<string | null>('setError');
 
 // export const changeCity = createAction<CityType>('changeCity');
 // export const setOffers = createAction<Offers[]>('setOffers');
@@ -15,5 +16,4 @@ export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
 // export const sortFromCheapest = createAction('sortFromCheapest');
 // export const sortFromTopRated = createAction('sortFromTopRated');
 
-// export const setError = createAction<string | null>('setError');
 // export const setProfileType = createAction<UserData | null>('setProfileType');

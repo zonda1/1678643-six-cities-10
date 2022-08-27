@@ -10,7 +10,7 @@ import { AppRoute } from '../../const';
 import LayoutOffer from '../layout-offer/layout-offer';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../types/state';
-import { isCheckedAuth } from '../../store/reducer';
+import { isCheckedAuth } from '../../utils';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getIsDataLoaded } from '../../store/data-process/selectors';

@@ -9,6 +9,6 @@ export type CommentType = {
 }
 
 export type NewCommentData = {
-  id: any,
+  id: number,
   review: CommentType,
 };

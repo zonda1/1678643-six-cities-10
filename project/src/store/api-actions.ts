@@ -4,24 +4,24 @@ import { AxiosInstance } from 'axios';
 import { Offers } from '../types/offers';
 import { Comments } from '../types/reviews';
 import { State, AppDispatch } from '../types/state';
-import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute } from '../const';
 import { redirectToRoute } from './action';
 import { AuthData, NewCommentData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
-import { store } from '.';
-import { setError } from './user-process/user-process';
+// import { TIMEOUT_SHOW_ERROR } from '../const';
+// import { store } from '.';
+// import { setError } from '../store/action';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
   () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
+    // setTimeout(
+    //   () => store.dispatch(setError(null)),
+    //   TIMEOUT_SHOW_ERROR,
+    // );
   },
 );
-
 
 export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
   dispatch: AppDispatch,
@@ -34,17 +34,18 @@ export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
     // dispatch(setDataLoadedStatus(true));
     // dispatch(setOffers(data));
     // dispatch(setDataLoadedStatus(false));
+
     return data;
   });
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'checkAuth',
   async (_arg, { dispatch, extra: api }) => {
-    await api.get(APIRoute.LOGIN);
+    const { data } = await api.get(APIRoute.LOGIN);
 
     // dispatch(setProfileType(data));
     // try {
@@ -52,7 +53,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     // } catch {
     //   dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     // }
-    // return data;
+    console.log(data);
+    return data;
   },
 );
 
