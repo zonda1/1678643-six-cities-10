@@ -1,4 +1,4 @@
-import { Comments } from '../../mocks/reviews';
+import { Comments } from '../../types/reviews';
 import { humanizeWholeDate } from '../../utils';
 
 type OfferReviewsProps = {

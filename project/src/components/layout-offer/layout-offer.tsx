@@ -3,10 +3,12 @@ import Logo from '../logo/logo';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getProfileType } from '../../store/user-process/selectors';
 
 function LayoutOffer() {
   const dispatch = useAppDispatch();
-  const { profileType, authorizationStatus } = useAppSelector((store) => store);
+  const profileType = useAppSelector(getProfileType);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <div className="page">

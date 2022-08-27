@@ -3,22 +3,24 @@ import PlaceCards from '../../components/place-cards/place-cards';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import SortingOptions from '../../components/sorting-options/sorting-options';
-
-import { Offers } from '../../mocks/offers';
-// import { Cities } from '../../mocks/city';
+import { Offers } from '../../types/offers';
 import { useAppSelector, useAppDispatch } from '../../types/state';
 import { useState } from 'react';
 import { AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
+import { getCity, getFilteredOffers } from '../../store/data-process/selectors';
+import { getProfileType } from '../../store/user-process/selectors';
 
 type MainScreenProps = {
   authorizationStatus: AuthorizationStatus,
 }
 
 function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
-  const { city, filteredOffers, profileType } = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
+  const filteredOffers = useAppSelector(getFilteredOffers);
+  const profileType = useAppSelector(getProfileType);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
@@ -27,11 +29,6 @@ function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
   };
-
-  // const onCardMouseClick = (cardItem: Offers) => {
-  //   console.log(cardItem);
-  //   dispatch(fetchCurrentOfferAction(cardItem));
-  // };
 
   return (
     <div className="page page--gray page--main">

@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../types/state';
-import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated } from '../../store/action';
+import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated } from '../../store/data-process/data-process';
 
 export default function SortingOptions(): JSX.Element {
   const dispatch = useAppDispatch();

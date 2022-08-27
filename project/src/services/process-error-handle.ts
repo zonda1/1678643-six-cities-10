@@ -1,4 +1,4 @@
-import { setError } from '../store/action';
+import { setError } from '../store/user-process/user-process';
 import { store } from '../store';
 import { clearErrorAction } from '../store/api-actions';
 
