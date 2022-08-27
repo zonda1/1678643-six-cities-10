@@ -1,4 +1,4 @@
-import { Comments } from '../../mocks/reviews';
+import { Comments } from '../../types/reviews';
 import OfferReviews from '../reviews/reviews';
 
 type ReviewsListProps = {

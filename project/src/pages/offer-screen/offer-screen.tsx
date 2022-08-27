@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-console */
-import { Offers } from '../../mocks/offers';
+import { Offers } from '../../types/offers';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
 import CommentForm from '../../components/comment-form/comment-form';
@@ -11,8 +11,10 @@ import OffersListNearby from '../../components/offers-list-nearby/offers-list-ne
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
-import { setCurrentOffer } from '../../store/action';
+import { setCurrentOffer } from '../../store/data-process/data-process';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getCurrentOffer, getCurrentOfferComments, getFilteredOffers, getOfersNearby } from '../../store/data-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 // type OfferScreenProps = {
 //   reviews: Reviews[],
@@ -22,7 +24,11 @@ function OfferScreen(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const { currentOffer, filteredOffers, offersNearby, currentOfferComments, authorizationStatus } = useAppSelector((state) => state);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const filteredOffers = useAppSelector(getFilteredOffers);
+  const offersNearby = useAppSelector(getOfersNearby);
+  const currentOfferComments = useAppSelector(getCurrentOfferComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(

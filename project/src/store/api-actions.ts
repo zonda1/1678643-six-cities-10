@@ -1,17 +1,16 @@
 /* eslint-disable no-console */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { Offers } from '../mocks/offers';
-import { Comments } from '../mocks/reviews';
+import { Offers } from '../types/offers';
+import { Comments } from '../types/reviews';
 import { State, AppDispatch } from '../types/state';
-import { APIRoute, AppRoute } from '../const';
-import { redirectToRoute, setAuthorizationStatus, setCurrentOffer, setDataLoadedStatus, setOffers, setOffersNearby, setOfferComments, setProfileType } from './action';
-import { AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { redirectToRoute } from './action';
 import { AuthData, NewCommentData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { store } from '.';
-import { setError } from './action';
+import { setError } from './user-process/user-process';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -24,7 +23,7 @@ export const clearErrorAction = createAsyncThunk(
 );
 
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -32,9 +31,10 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offers[]>(APIRoute.HOTELS);
-    dispatch(setDataLoadedStatus(true));
-    dispatch(setOffers(data));
-    dispatch(setDataLoadedStatus(false));
+    // dispatch(setDataLoadedStatus(true));
+    // dispatch(setOffers(data));
+    // dispatch(setDataLoadedStatus(false));
+    return data;
   });
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
@@ -44,18 +44,20 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'checkAuth',
   async (_arg, { dispatch, extra: api }) => {
-    try {
-      const { data } = await api.get(APIRoute.LOGIN);
-      dispatch(setProfileType(data));
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    }
+    await api.get(APIRoute.LOGIN);
+
+    // dispatch(setProfileType(data));
+    // try {
+    //   dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    // } catch {
+    //   dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    // }
+    // return data;
   },
 );
 
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -65,9 +67,10 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const { data } = await api.post<UserData>(APIRoute.LOGIN, { email, password });
     const { token } = data;
     saveToken(token);
-    dispatch(setProfileType(data));
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    // dispatch(setProfileType(data));
+    // dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
+    return data;
   },
 );
 
@@ -81,13 +84,13 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.LOGOUT);
     dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    dispatch(setProfileType(null));
+    // dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    // dispatch(setProfileType(null));
   },
 );
 
 
-export const fetchCurrentOfferAction = createAsyncThunk<void, number, {
+export const fetchCurrentOfferAction = createAsyncThunk<Offers, number, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -95,10 +98,11 @@ export const fetchCurrentOfferAction = createAsyncThunk<void, number, {
   'fetchCurrentOffer',
   async (id, { dispatch, extra: api }) => {
     const { data } = await api.get<Offers>(`${APIRoute.HOTELS}/${id}`);
-    dispatch(setCurrentOffer(data));
+    // dispatch(setCurrentOffer(data));
+    return data;
   });
 
-export const fetchOffersNearbyAction = createAsyncThunk<void, number, {
+export const fetchOffersNearbyAction = createAsyncThunk<Offers[], number, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -106,10 +110,11 @@ export const fetchOffersNearbyAction = createAsyncThunk<void, number, {
   'fetchOffersNearby',
   async (id, { dispatch, extra: api }) => {
     const { data } = await api.get<Offers[]>(`${APIRoute.HOTELS}/${id}/nearby`);
-    dispatch(setOffersNearby(data));
+    // dispatch(setOffersNearby(data));
+    return data;
   });
 
-export const fetchOfferCommentsAction = createAsyncThunk<void, number, {
+export const fetchOfferCommentsAction = createAsyncThunk<Comments[], number, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -117,12 +122,12 @@ export const fetchOfferCommentsAction = createAsyncThunk<void, number, {
   'fetchOfferComments',
   async (id, { dispatch, extra: api }) => {
     const { data } = await api.get<Comments[]>(`${APIRoute.COMMENTS}/${id}`);
-    console.log(data);
-    dispatch(setOfferComments(data));
+    // dispatch(setOfferComments(data));
+    return data;
   });
 
 
-export const postNewComment = createAsyncThunk<void, NewCommentData, {
+export const postNewComment = createAsyncThunk<Comments[], NewCommentData, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -130,7 +135,8 @@ export const postNewComment = createAsyncThunk<void, NewCommentData, {
   'postNewComment',
   async ({ id, review: { comment, rating } }, { dispatch, extra: api }) => {
     const { data } = await api.post<Comments[]>(`${APIRoute.COMMENTS}/${id}`, { comment, rating });
-    console.log(data);
-    dispatch(setOfferComments(data));
+    // console.log(data);
+    // dispatch(setOfferComments(data));
+    return data;
   },
 );

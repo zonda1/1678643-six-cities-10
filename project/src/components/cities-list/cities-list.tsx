@@ -1,9 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../types/state';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/data-process/data-process';
 import { memo } from 'react';
+import { getAllCities, getCity } from '../../store/data-process/selectors';
 
 function CitiesList() {
-  const { city: currentCity, allCities } = useAppSelector((state) => state);
+  const allCities = useAppSelector(getAllCities);
+  const currentCity = useAppSelector(getCity);
   const dispatch = useAppDispatch();
   return (
     <ul className="locations__list tabs__list">

@@ -1,4 +1,4 @@
-import { Offers } from '../../mocks/offers';
+import { Offers } from '../../types/offers';
 import PlaceCard from '../place-card/place-card';
 
 export type OffersListProps = {
