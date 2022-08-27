@@ -10,7 +10,7 @@ import { AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
-import { getCity, getFilteredOffers } from '../../store/data-process/selectors';
+import { getCity, getFilteredByCity } from '../../store/data-process/selectors';
 import { getProfileType } from '../../store/user-process/selectors';
 
 type MainScreenProps = {
@@ -19,7 +19,7 @@ type MainScreenProps = {
 
 function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
   const city = useAppSelector(getCity);
-  const filteredOffers = useAppSelector(getFilteredOffers);
+  const filteredOffers = useAppSelector(getFilteredByCity);
   const profileType = useAppSelector(getProfileType);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined

@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../types/state';
 import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
 import { setCurrentOffer } from '../../store/data-process/data-process';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { getCurrentOffer, getCurrentOfferComments, getFilteredOffers, getOfersNearby } from '../../store/data-process/selectors';
+import { getCurrentOffer, getCurrentOfferComments, getFilteredByCity, getOfersNearby } from '../../store/data-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 // type OfferScreenProps = {
@@ -25,11 +25,11 @@ function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const currentOffer = useAppSelector(getCurrentOffer);
-  const filteredOffers = useAppSelector(getFilteredOffers);
+  const filteredOffers = useAppSelector(getFilteredByCity);
   const offersNearby = useAppSelector(getOfersNearby);
   const currentOfferComments = useAppSelector(getCurrentOfferComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean | null>(false);
 
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
@@ -38,11 +38,11 @@ function OfferScreen(): JSX.Element {
 
   useEffect(() => {
 
-    const fetchCurrrentOfferData = () => {
-      dispatch(fetchCurrentOfferAction(Number(id)));
-      dispatch(fetchOffersNearbyAction(Number(id)));
-      dispatch(fetchOfferCommentsAction(Number(id)));
-    };
+    const fetchCurrrentOfferData = () => Promise.all([
+      dispatch(fetchCurrentOfferAction(Number(id))),
+      dispatch(fetchOffersNearbyAction(Number(id))),
+      dispatch(fetchOfferCommentsAction(Number(id)))]
+    );
 
     if (id) {
       (async () => {
@@ -50,7 +50,13 @@ function OfferScreen(): JSX.Element {
         try {
           await fetchCurrrentOfferData();
         } finally {
-          setIsLoading(false);
+          const result = await fetchCurrrentOfferData();
+          if (result.every((item) => item.meta.requestStatus === 'fulfilled')) {
+            setIsLoading(false);
+          }
+          else {
+            setIsLoading(null);
+          }
         }
       }
       )();
@@ -60,8 +66,11 @@ function OfferScreen(): JSX.Element {
     };
   }, [dispatch, id]);
 
-  if (isLoading) {
+  if (isLoading === true) {
     return <LoadingScreen />;
+  }
+  if (isLoading === null) {
+    return <NotFoundScreen />;
   }
 
   const onCardMousePoint = (listItemName: Offers | undefined) => {
@@ -70,7 +79,7 @@ function OfferScreen(): JSX.Element {
 
   const onUserCommentHandler = (comment: string, rating: number | null) => {
     if (id) {
-      dispatch(postNewComment({ id, review: { comment, rating } }));
+      dispatch(postNewComment({ id: Number(id), review: { comment, rating } }));
     }
   };
 
@@ -180,7 +189,7 @@ function OfferScreen(): JSX.Element {
       </>
     );
   }
-  return (<NotFoundScreen />);
+  return (<LoadingScreen />);
 }
 
 
