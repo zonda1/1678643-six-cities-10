@@ -3,10 +3,11 @@ import PlaceCard from '../place-card/place-card';
 
 export type OffersListProps = {
   offers: Offers[],
-  onCardMousePoint?: (listItemName: Offers | undefined) => void;
+  onCardMousePoint?: (listItemName: Offers | undefined) => void,
+  favoriteOffersChanger?: (counter: number) => void
 };
 
-function PlaceCards({ offers, onCardMousePoint }: OffersListProps): JSX.Element {
+function PlaceCards({ offers, onCardMousePoint, favoriteOffersChanger }: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer, id) => {

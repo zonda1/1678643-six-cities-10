@@ -4,10 +4,12 @@ import { AuthorizationStatus, AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getProfileType } from '../../store/user-process/selectors';
+import { getFavoriteOffers } from '../../store/data-process/selectors';
 
 function LayoutOffer() {
   const dispatch = useAppDispatch();
   const profileType = useAppSelector(getProfileType);
+  const offers = useAppSelector(getFavoriteOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
@@ -23,12 +25,12 @@ function LayoutOffer() {
                 {profileType && authorizationStatus === AuthorizationStatus.Auth ?
                   <>
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
+                      <Link to={`/${AppRoute.Favorites}`} className="header__nav-link header__nav-link--profile">
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__user-name user__name">{profileType.email}</span>
-                        <span className="header__favorite-count">3</span>
-                      </a>
+                        <span className="header__favorite-count">{offers.length}</span>
+                      </Link>
                     </li>
                     <li className="header__nav-item">
                       <a className="header__nav-link" href="#" onClick={() => {

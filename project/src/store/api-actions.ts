@@ -142,3 +142,42 @@ export const postNewComment = createAsyncThunk<Comments[], NewCommentData, {
     return data;
   },
 );
+
+//Favorites
+
+export const fetchFavoriteOffersAction = createAsyncThunk<Offers[], undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchFavoriteOffers',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Offers[]>(APIRoute.FAVORITE);
+    console.log(data);
+    return data;
+  });
+
+
+export const addOfferToFavorite = createAsyncThunk<Offers, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'postNewFavoriteOffer',
+  async (id, { dispatch, extra: api }) => {
+    const { data } = await api.post<Offers>(`${APIRoute.FAVORITE}/${id}/1`);
+    // console.log(data);
+    return data;
+  },
+);
+export const deleateOfferFromFavorite = createAsyncThunk<Offers, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'postDeleateFavoriteOffer',
+  async (id, { dispatch, extra: api }) => {
+    const { data } = await api.post<Offers>(`${APIRoute.FAVORITE}/${id}/0`);
+    return data;
+  },
+);

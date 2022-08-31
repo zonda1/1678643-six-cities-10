@@ -1,11 +1,29 @@
+/* eslint-disable no-console */
 import Logo from '../../components/logo/logo';
 import FavoritePlaceCard from '../../components/favorites-place-card/favorites-place-card';
-import { useAppSelector } from '../../types/state';
-import { getOffers } from '../../store/data-process/selectors';
+import { useAppDispatch, useAppSelector } from '../../types/state';
+import { getFavoriteOffers } from '../../store/data-process/selectors';
+import { getProfileType } from '../../store/user-process/selectors';
+import { useEffect } from 'react';
+import { deleateOfferFromFavorite, fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
 
 
 function FavoritesScreen(): JSX.Element {
-  const offers = useAppSelector(getOffers);
+  const offers = useAppSelector(getFavoriteOffers);
+  const profileType = useAppSelector(getProfileType);
+  // console.log(profileType);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, []);
+
+  const bookmarkRemoveButtonClickHandler = (id: number) => {
+    dispatch(deleateOfferFromFavorite(id));
+    dispatch(fetchFavoriteOffersAction());
+  };
+  const cities = [...new Set(offers.map((el) => el.city.name))];
+  console.log(cities);
   return (
     <div className="page">
       <header className="header">
@@ -17,15 +35,18 @@ function FavoritesScreen(): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <a href='#' className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__user-name user__name">{profileType?.email}</span>
+                    <span className="header__favorite-count">{offers.length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <a className="header__nav-link" href="#" onClick={() => {
+                    dispatch(logoutAction());
+                  }}
+                  >
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>
@@ -40,24 +61,29 @@ function FavoritesScreen(): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-
-                  {offers.map((offer, id) => {
-                    const keyValue = `favorite-offer-${id}`;
-                    return (
-                      <FavoritePlaceCard key={keyValue} offer={offer} />
-                    );
-                  })}
-                </div>
-              </li>
+              {cities.map((city, id) => {
+                const keyValue = `favorites__locations-${id}`;
+                return (
+                  <li key={keyValue} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div className="favorites__places">
+                      {offers.map((offer, innerId) => {
+                        if (offer.city.name === city) {
+                          const innerKeyValue = `favorites__offers-${innerId}`;
+                          return (
+                            <FavoritePlaceCard key={innerKeyValue} offer={offer} bookmarkRemoveButtonClickHandler={bookmarkRemoveButtonClickHandler} />
+                          );
+                        }
+                      })}
+                    </div>
+                  </li>);
+              })}
             </ul>
           </section>
         </div>
