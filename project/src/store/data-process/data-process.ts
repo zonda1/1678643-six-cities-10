@@ -58,12 +58,10 @@ export const fetchData = createSlice({
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
-
         const cities = [...state.offers.reduce((map, offer) => {
           map.set(offer.city.name, offer.city);
           return map;
         }, new Map<string, CityType>()).values()];
-
         state.allCities = cities;
         state.filteredOffers = filterByCity(state.offers, state.city);
         state.isDataLoaded = false;

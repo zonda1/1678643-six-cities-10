@@ -26,7 +26,6 @@ function OfferScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [isLoading, setIsLoading] = useState<boolean | null>(false);
 
-
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
