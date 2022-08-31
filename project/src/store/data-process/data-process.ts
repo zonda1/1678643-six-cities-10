@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import { FetchData } from '../../types/state';
 import { NameSpace } from '../../const';
@@ -57,6 +58,11 @@ export const fetchData = createSlice({
 
         state.allCities = cities;
         state.filteredOffers = filterByCity(state.offers, state.city);
+        state.isDataLoaded = false;
+      })
+      .addCase(fetchOffersAction.rejected, (state, action) => {
+        // state.offers = action.payload;
+        console.log('no data');
         state.isDataLoaded = false;
       })
       .addCase(fetchCurrentOfferAction.fulfilled, (state, action) => {

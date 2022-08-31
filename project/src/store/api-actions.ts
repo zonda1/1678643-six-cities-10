@@ -34,7 +34,6 @@ export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
     // dispatch(setDataLoadedStatus(true));
     // dispatch(setOffers(data));
     // dispatch(setDataLoadedStatus(false));
-
     return data;
   });
 
@@ -46,7 +45,6 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   'checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get(APIRoute.LOGIN);
-
     // dispatch(setProfileType(data));
     // try {
     //   dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));

@@ -1,10 +1,9 @@
+/* eslint-disable no-unsafe-finally */
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NoFoundScreen from '../../pages/no-found-screen/not-found-screen';
-// import PrivateRoute from '../private-route/private-route';
-// import { AuthorizationStatus } from '../../const';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import LayoutOffer from '../layout-offer/layout-offer';
@@ -15,6 +14,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getIsDataLoaded } from '../../store/data-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+// import MainEmpty from '../main-empty/main-empty';
 
 function App(): JSX.Element {
 
@@ -22,11 +22,10 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
 
+    return <LoadingScreen />;
+    // return <MainEmpty />;
+  }
 
   return (
     <HistoryRouter history={browserHistory} >
