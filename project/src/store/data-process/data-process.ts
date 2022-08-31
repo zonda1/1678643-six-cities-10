@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import { FetchData } from '../../types/state';
 import { NameSpace } from '../../const';
-import { fetchOffersAction, fetchCurrentOfferAction, fetchOffersNearbyAction, fetchOfferCommentsAction, postNewComment, fetchFavoriteOffersAction } from '../api-actions';
+import { fetchOffersAction, fetchCurrentOfferAction, fetchOffersNearbyAction, fetchOfferCommentsAction, postNewComment, fetchFavoriteOffersAction, addOfferToFavorite, deleateOfferFromFavorite } from '../api-actions';
 import { CityType } from '../../types/offers';
 import { filterByCity } from '../../utils';
+import { Offers } from '../../types/offers';
 
 
 const initialState: FetchData = {
@@ -24,6 +24,14 @@ const initialState: FetchData = {
   favoriteOffers: [],
   isDataLoaded: false,
 };
+function updateOffer(offers: Offers[], update: Offers): Offers[] {
+  return offers.map((offer) => {
+    if (offer.id === update.id) {
+      return update;
+    }
+    return offer;
+  });
+}
 
 export const fetchData = createSlice({
   name: NameSpace.Data,
@@ -61,8 +69,6 @@ export const fetchData = createSlice({
         state.isDataLoaded = false;
       })
       .addCase(fetchOffersAction.rejected, (state, action) => {
-        // state.offers = action.payload;
-        console.log('no data');
         state.isDataLoaded = false;
       })
       .addCase(fetchCurrentOfferAction.fulfilled, (state, action) => {
@@ -79,10 +85,23 @@ export const fetchData = createSlice({
       })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
+      })
+      .addCase(addOfferToFavorite.fulfilled, (state, action) => {
+        if (state.currentOffer?.id === action.payload.id) {
+          state.currentOffer = action.payload;
+        }
+        state.offers = updateOffer(state.offers, action.payload);
+        state.offersNearby = updateOffer(state.offersNearby, action.payload);
+        state.filteredOffers = updateOffer(state.filteredOffers, action.payload);
+      })
+      .addCase(deleateOfferFromFavorite.fulfilled, (state, action) => {
+        if (state.currentOffer?.id === action.payload.id) {
+          state.currentOffer = action.payload;
+        }
+        state.offers = updateOffer(state.offers, action.payload);
+        state.offersNearby = updateOffer(state.offersNearby, action.payload);
+        state.filteredOffers = updateOffer(state.filteredOffers, action.payload);
       });
-    // .addCase(deleateOfferFromFavorite.fulfilled, (state, action) => {
-    //   state.favoriteOffers = action.payload;
-    // });
   }
 });
 export const { changeCity, setCurrentOffer, sortFromCheapest, sortFromTopRated, sortFromMostExpensive, sortByPopular } = fetchData.actions;

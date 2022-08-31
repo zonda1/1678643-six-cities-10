@@ -3,7 +3,6 @@ import { useAppDispatch } from '../../types/state';
 import { sortFromMostExpensive, sortFromCheapest, sortFromTopRated, sortByPopular } from '../../store/data-process/data-process';
 import { useState } from 'react';
 import classnames from 'classnames';
-// import { getFilteredOffers } from '../../store/data-process/selectors';
 
 export default function SortingOptions(): JSX.Element {
   const dispatch = useAppDispatch();

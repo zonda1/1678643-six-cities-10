@@ -37,9 +37,6 @@ export const userProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.profileType = null;
       });
-    // .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
-    //   state.profileType = action.payload;
-    // };
   }
 });
 

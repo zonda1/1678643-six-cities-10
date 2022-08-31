@@ -14,7 +14,6 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getIsDataLoaded } from '../../store/data-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-// import MainEmpty from '../main-empty/main-empty';
 
 function App(): JSX.Element {
 
@@ -22,9 +21,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
-
     return <LoadingScreen />;
-    // return <MainEmpty />;
   }
 
   return (

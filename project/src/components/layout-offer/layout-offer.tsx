@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, NavLink } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../types/state';
@@ -25,12 +25,12 @@ function LayoutOffer() {
                 {profileType && authorizationStatus === AuthorizationStatus.Auth ?
                   <>
                     <li className="header__nav-item user">
-                      <Link to={`/${AppRoute.Favorites}`} className="header__nav-link header__nav-link--profile">
+                      <NavLink to={`/${AppRoute.Favorites}`} className="header__nav-link header__nav-link--profile">
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__user-name user__name">{profileType.email}</span>
                         <span className="header__favorite-count">{offers.length}</span>
-                      </Link>
+                      </NavLink>
                     </li>
                     <li className="header__nav-item">
                       <a className="header__nav-link" href="#" onClick={() => {

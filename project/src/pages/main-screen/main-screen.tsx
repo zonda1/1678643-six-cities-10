@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import PlaceCards from '../../components/place-cards/place-cards';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
@@ -10,8 +9,9 @@ import { AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
-import { getCity, getFavoriteOffers, getFilteredOffers,/*getFilteredByCity*/ } from '../../store/data-process/selectors';
+import { getCity, getFavoriteOffers, getFilteredOffers } from '../../store/data-process/selectors';
 import { getProfileType } from '../../store/user-process/selectors';
+import MainEmpty from '../../components/main-empty/main-empty';
 
 
 type MainScreenProps = {
@@ -20,25 +20,22 @@ type MainScreenProps = {
 
 function MainScreen({ authorizationStatus }: MainScreenProps): JSX.Element {
   const city = useAppSelector(getCity);
-  // const filteredOffers = useAppSelector(getFilteredByCity);
   const filteredOffers = useAppSelector(getFilteredOffers);
   const profileType = useAppSelector(getProfileType);
   const offers = useAppSelector(getFavoriteOffers);
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
-  // const [favOffersCount, setFavOffersCount] = useState<number>(
-  //   offers.length
-  // );
+
   const dispatch = useAppDispatch();
 
   const onCardMousePoint = (listItemName: Offers | undefined) => {
     setSelectedPoint(listItemName);
   };
 
-  // const favoriteOffersChanger = (counter: number) => {
-  //   setFavOffersCount(counter);
-  // };
+  if (!filteredOffers.length) {
+    return <MainEmpty />;
+  }
 
   return (
     <div className="page page--gray page--main">

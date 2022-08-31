@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-console */
 import { Offers } from '../../types/offers';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
@@ -13,13 +11,9 @@ import { useAppDispatch, useAppSelector } from '../../types/state';
 import { addOfferToFavorite, deleateOfferFromFavorite, fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
 import { setCurrentOffer } from '../../store/data-process/data-process';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { getCurrentOffer, getCurrentOfferComments, getFavoriteOffers, getFilteredByCity, getOfersNearby } from '../../store/data-process/selectors';
+import { getCurrentOffer, getCurrentOfferComments, getFilteredByCity, getOfersNearby } from '../../store/data-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import classnames from 'classnames';
-
-// type OfferScreenProps = {
-//   reviews: Reviews[],
-// }
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
@@ -30,17 +24,12 @@ function OfferScreen(): JSX.Element {
   const offersNearby = useAppSelector(getOfersNearby);
   const currentOfferComments = useAppSelector(getCurrentOfferComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const [isLoading, setIsLoading] = useState<boolean | null>(false);
-  const [isPressed, setIsPressed] = useState<{ show: boolean }>({ show: false });
-  console.log(isPressed);
+
 
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
-
-  const currentFavoriteOffer = favoriteOffers.find((item) => item.id === Number(id));
-  console.log(currentFavoriteOffer);
 
   useEffect(() => {
 
@@ -89,21 +78,17 @@ function OfferScreen(): JSX.Element {
     }
   };
 
-  const bookmarkButtonClickHandler = () => {
-    if (isPressed.show === false) {
-      dispatch(addOfferToFavorite(Number(id)));
-    } else {
-      dispatch(deleateOfferFromFavorite(Number(id)));
-    }
-    setIsPressed({ show: !isPressed.show });
-  };
-
   if (currentOffer && offersNearby && currentOfferComments) {
-    const { price, description, rating, title, bedrooms, maxAdults, type, goods, isPremium, images, host: { name, isPro, avatarUrl } } = currentOffer;
 
-    // if (currentFavoriteOffer) {
-    //   setIsPressed({ show: currentFavoriteOffer.isFavorite });
-    // }
+    const bookmarkButtonClickHandler = () => {
+      if (currentOffer.isFavorite) {
+        dispatch(deleateOfferFromFavorite(Number(id)));
+      } else {
+        dispatch(addOfferToFavorite(Number(id)));
+      }
+    };
+
+    const { price, description, rating, title, bedrooms, maxAdults, type, goods, isPremium, images, host: { name, isPro, avatarUrl } } = currentOffer;
 
     return (
       <>
@@ -129,7 +114,7 @@ function OfferScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={classnames('property__bookmark-button button', { 'property__bookmark-button--active': isPressed.show })} type="button" onClick={bookmarkButtonClickHandler}>
+                <button className={classnames('property__bookmark-button button', { 'property__bookmark-button--active': currentOffer.isFavorite })} type="button" onClick={bookmarkButtonClickHandler}>
                   <svg className="place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
