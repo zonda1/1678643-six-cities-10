@@ -27,5 +27,6 @@ export type FetchData = {
   currentOffer: Offers | null,
   offersNearby: Offers[],
   currentOfferComments: Comments[],
+  favoriteOffers: Offers[],
   isDataLoaded: boolean
 }

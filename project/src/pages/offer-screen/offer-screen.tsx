@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-console */
 import { Offers } from '../../types/offers';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
@@ -10,15 +8,12 @@ import Map from '../../components/map/map';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../types/state';
-import { fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
+import { addOfferToFavorite, deleateOfferFromFavorite, fetchCurrentOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction, postNewComment } from '../../store/api-actions';
 import { setCurrentOffer } from '../../store/data-process/data-process';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getCurrentOffer, getCurrentOfferComments, getFilteredByCity, getOfersNearby } from '../../store/data-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-
-// type OfferScreenProps = {
-//   reviews: Reviews[],
-// }
+import classnames from 'classnames';
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
@@ -34,7 +29,6 @@ function OfferScreen(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offers | undefined>(
     undefined
   );
-
 
   useEffect(() => {
 
@@ -84,6 +78,15 @@ function OfferScreen(): JSX.Element {
   };
 
   if (currentOffer && offersNearby && currentOfferComments) {
+
+    const bookmarkButtonClickHandler = () => {
+      if (currentOffer.isFavorite) {
+        dispatch(deleateOfferFromFavorite(Number(id)));
+      } else {
+        dispatch(addOfferToFavorite(Number(id)));
+      }
+    };
+
     const { price, description, rating, title, bedrooms, maxAdults, type, goods, isPremium, images, host: { name, isPro, avatarUrl } } = currentOffer;
 
     return (
@@ -110,8 +113,8 @@ function OfferScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                <button className={classnames('property__bookmark-button button', { 'property__bookmark-button--active': currentOffer.isFavorite })} type="button" onClick={bookmarkButtonClickHandler}>
+                  <svg className="place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>

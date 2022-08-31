@@ -3,7 +3,7 @@ import PlaceCard from '../place-card/place-card';
 
 export type OffersListProps = {
   offers: Offers[],
-  onCardMousePoint?: (listItemName: Offers | undefined) => void;
+  onCardMousePoint?: (listItemName: Offers | undefined) => void,
 };
 
 function PlaceCards({ offers, onCardMousePoint }: OffersListProps): JSX.Element {

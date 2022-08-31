@@ -13,7 +13,7 @@ function CitiesList() {
         const keyValue = `city-${index}`;
         return (
           <li key={keyValue} className="locations__item">
-            <a className={`${city === currentCity ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}`} href="#" onClick={() =>
+            <a className={`${city.name === currentCity.name ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}`} href="#" onClick={() =>
               dispatch(changeCity(city))}
             >
               <span>{city.name}</span>
