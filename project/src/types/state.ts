@@ -27,9 +27,6 @@ export type FetchData = {
   currentOffer: Offers | null,
   offersNearby: Offers[],
   currentOfferComments: Comments[],
-<<<<<<< HEAD
   favoriteOffers: Offers[],
-=======
->>>>>>> master
   isDataLoaded: boolean
 }

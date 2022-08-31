@@ -39,7 +39,3 @@ export const userProcess = createSlice({
       });
   }
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> master
