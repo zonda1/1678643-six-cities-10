@@ -1,5 +1,5 @@
 import { Comments } from '../../types/reviews';
-import OfferReviews from '../reviews/reviews';
+import Reviews from '../reviews/reviews';
 
 type ReviewsListProps = {
   comments: Comments[],
@@ -13,7 +13,7 @@ export default function ReviewsList({ comments }: ReviewsListProps) {
         {comments.map((comment, id) => {
           const keyValue = `offer-${id}`;
           return (
-            <OfferReviews key={keyValue} review={comment} />
+            <Reviews key={keyValue} review={comment} />
           );
         })}
       </ul>

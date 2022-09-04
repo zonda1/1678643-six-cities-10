@@ -5,7 +5,7 @@ type OfferReviewsProps = {
   review: Comments,
 }
 
-export default function OfferReviews({ review }: OfferReviewsProps): JSX.Element {
+export default function Reviews({ review }: OfferReviewsProps): JSX.Element {
   const { user: { name, avatarUrl }, rating, comment, date } = review;
   return (
     <li className="reviews__item">
