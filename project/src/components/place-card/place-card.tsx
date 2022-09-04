@@ -1,9 +1,12 @@
+
 import { Offers } from '../../types/offers';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../types/state';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../types/state';
 import { addOfferToFavorite, deleateOfferFromFavorite } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import classnames from 'classnames';
+
 
 export type OfferProps = {
   offer: Offers,
@@ -14,8 +17,14 @@ export type OfferProps = {
 function PlaceCard({ offer, onCardMousePoint, className }: OfferProps): JSX.Element {
   const { price, title, type, id, previewImage, isPremium, rating, isFavorite } = offer;
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
+
 
   const bookmarkButtonClickHandler = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
     if (isFavorite) {
       dispatch(deleateOfferFromFavorite(Number(id)));
     } else {
@@ -54,7 +63,7 @@ function PlaceCard({ offer, onCardMousePoint, className }: OfferProps): JSX.Elem
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -2,17 +2,19 @@ import Logo from '../../components/logo/logo';
 import FavoritePlaceCard from '../../components/favorites-place-card/favorites-place-card';
 import { useAppDispatch, useAppSelector } from '../../types/state';
 import { getFavoriteOffers } from '../../store/data-process/selectors';
-import { getProfileType } from '../../store/user-process/selectors';
+import { getAuthorizationStatus, getProfileType } from '../../store/user-process/selectors';
 import { useEffect } from 'react';
 import { deleateOfferFromFavorite, fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
 import { NavLink } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import LoginScreen from '../login-screen/login-screen';
 
 
 function FavoritesScreen(): JSX.Element {
   const offers = useAppSelector(getFavoriteOffers);
   const profileType = useAppSelector(getProfileType);
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     dispatch(fetchFavoriteOffersAction());
@@ -23,6 +25,11 @@ function FavoritesScreen(): JSX.Element {
     dispatch(fetchFavoriteOffersAction());
   };
   const cities = [...new Set(offers.map((el) => el.city.name))];
+
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
+    return <LoginScreen />;
+  }
+
   return (
     <div className="page">
       <header className="header">
