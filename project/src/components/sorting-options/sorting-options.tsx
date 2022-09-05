@@ -9,7 +9,6 @@ export default function SortingOptions(): JSX.Element {
   const [isListOpened, setIsListOpened] = useState<boolean>(false);
   const [isSortingPick, setSortingPick] = useState<string>('Popular');
 
-
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
