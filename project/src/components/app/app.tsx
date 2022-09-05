@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-finally */
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';

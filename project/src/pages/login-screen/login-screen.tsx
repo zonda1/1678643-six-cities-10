@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../types/state';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { useForm } from 'react-hook-form';
+import './login-screen.css';
 
 
 function LoginScreen() {
@@ -43,12 +44,12 @@ function LoginScreen() {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" placeholder="Email" {...register('email', { required: { value: true, message: 'This field is required' }, pattern: { value: /\w+@\w+\.\w+/, message: 'Invalid email' } })} />
-                {errors.email?.message}
+                <span>{errors.email?.message}</span>
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input className="login__input form__input" type="password" placeholder="Password" {...register('password', { required: { value: true, message: 'This field is required' }, pattern: { value: /[A-Za-z]+[0-9]+/, message: 'At least 1 letter and 1 number required' } })} />
-                {errors.password?.message}
+                <span>{errors.password?.message}</span>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>

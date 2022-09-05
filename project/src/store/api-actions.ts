@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Offers } from '../types/offers';
@@ -29,7 +28,6 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   'checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get(APIRoute.LOGIN);
-    console.log(data);
     return data;
   },
 );

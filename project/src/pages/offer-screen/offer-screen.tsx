@@ -1,9 +1,9 @@
 import { Offers } from '../../types/offers';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import NotFoundScreen from '../no-found-screen/not-found-screen';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, AppRoute } from '../../const';
 import Map from '../../components/map/map';
 import OffersListNearby from '../../components/offers-list-nearby/offers-list-nearby';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import classnames from 'classnames';
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const currentOffer = useAppSelector(getCurrentOffer);
   const filteredOffers = useAppSelector(getFilteredByCity);
@@ -80,6 +81,9 @@ function OfferScreen(): JSX.Element {
   if (currentOffer && offersNearby && currentOfferComments) {
 
     const bookmarkButtonClickHandler = () => {
+      if (authorizationStatus !== AuthorizationStatus.Auth) {
+        navigate(`/${AppRoute.Login}`);
+      }
       if (currentOffer.isFavorite) {
         dispatch(deleateOfferFromFavorite(Number(id)));
       } else {

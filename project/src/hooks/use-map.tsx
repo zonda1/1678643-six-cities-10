@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { CityType } from '../types/offers';
